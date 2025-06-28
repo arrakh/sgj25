@@ -14,7 +14,8 @@ namespace Prototype
         [SerializeField] private Image highlight, lockedImage;
 
         public CardType Type { private set; get; }
-        public int Value { private set; get; }
+        public CardData Data { private set; get; }
+        public int Value { set; get; }
         
         private bool isSelected;
         private bool isLocked;
@@ -23,6 +24,7 @@ namespace Prototype
         
         public void Display(CardData data, Action<Card> onCardPicked)
         {
+            Data = data;
             Value = data.value;
             Type = data.type;
 
