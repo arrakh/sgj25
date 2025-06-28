@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using DG.Tweening;
 using Newtonsoft.Json;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
@@ -24,7 +26,10 @@ namespace Prototype
         [SerializeField] private RectTransform cardParent;
         [SerializeField] private TextMeshProUGUI roomText;
         [SerializeField] private TextMeshProUGUI healthText;
+        
         [SerializeField] private Card equippedCard;
+        [SerializeField] private TextMeshProUGUI equippedValueText;
+
         [SerializeField] private Button standardActionButton;
         [SerializeField] private TextMeshProUGUI standardActionText;
 
@@ -38,6 +43,8 @@ namespace Prototype
         [SerializeField] private RectTransform infoParent;
         
         [SerializeField] private Slider dungeonProgress;
+        [SerializeField] private GameObject resultScreen;
+        [SerializeField] private TextMeshProUGUI resultScreenText;
 
         [Header("Prefabs")] 
         [SerializeField] private Card cardPrefab;
@@ -61,6 +68,8 @@ namespace Prototype
             fightActionButton.onClick.AddListener(OnFightWithWeaponAction);
             runActionButton.onClick.AddListener(OnRunAction);
             dungeonInfoButton.onClick.AddListener(ToggleDungeonInfo);
+            
+            resultScreen.SetActive(false);
         }
 
         private void ToggleDungeonInfo()
@@ -71,6 +80,12 @@ namespace Prototype
 
         private void Update()
         {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                SceneManager.LoadScene(0);
+                return;
+            }
+            
             healthText.text = $" {health}<size=33%>/{maxHealth}";
 
             var hasSelected = selectedCard != null;
@@ -108,10 +123,12 @@ namespace Prototype
                 Death();
                 return;
             }
-            
+
             if (spawnedCards.Count <= cardLeftToNextTurn) NextRoom();
-            
+
             UpdateInfo();
+
+            if (deck.Count <= 0 && spawnedCards.Count <= 0) Victory();
         }
 
         private void NextRoom()
@@ -190,6 +207,7 @@ namespace Prototype
         {
             health += selectedCard.Value;
             health = Math.Clamp(health, 0, maxHealth);
+            ShakeColorAnimateText(healthText, Color.green, 0.3f);
             
             ConsumeSelectedCard();
         }
@@ -198,6 +216,9 @@ namespace Prototype
         {
             health -= selectedCard.Value;
             health = Math.Clamp(health, 0, maxHealth);
+
+            var shakeDur = Mathf.Clamp01(selectedCard.Value / 10f);
+            ShakeColorAnimateText(healthText, Color.red, Mathf.Lerp(0.2f, 1.2f, shakeDur));
 
             ConsumeSelectedCard();
         }
@@ -211,11 +232,16 @@ namespace Prototype
             if (remainder < 0) //monster is stronger
             {
                 health += remainder;
+                
+                var shakeDur = Mathf.Clamp01(remainder / 10f);
+                ShakeColorAnimateText(healthText, Color.red, Mathf.Lerp(0.2f, 1.2f, shakeDur));
             }
             else
             {
                 equippedWeapon.value = selectedCard.Value;
                 equippedCard.Display(equippedWeapon, null);
+                
+                ShakeColorAnimateText(equippedValueText, Color.red, 0.3f);
             }
 
             ConsumeSelectedCard();
@@ -226,6 +252,9 @@ namespace Prototype
             equippedWeapon = selectedCard.Data;
             
             equippedCard.Display(equippedWeapon, null);
+            
+            ShakeColorAnimateText(equippedValueText, Color.green, 0.3f);
+
             ConsumeSelectedCard();
         }
 
@@ -265,7 +294,26 @@ namespace Prototype
 
         private void Death()
         {
+            resultScreen.SetActive(true);
+            resultScreenText.text = "You DIED! \n<size=40%>press [esc] to Retry";
+        }
+
+        private void Victory()
+        {
+            resultScreen.SetActive(true);
+            resultScreenText.text = "You WIN! \n<size=40%>press [esc] to Retry";
+        }
+
+        private void ShakeColorAnimateText(TextMeshProUGUI text, Color color, float duration)
+        {
+            text.DOKill();
             
+            text.transform.localScale = Vector3.one * 1.1f;
+            text.transform.DOScale(Vector3.one, duration);
+            text.transform.DOShakePosition(duration, 10f);
+            var originalColor = text.color;
+            text.color = color;
+            text.DOColor(originalColor, duration);
         }
     }
 }
