@@ -11,11 +11,8 @@ using Random = UnityEngine.Random;
 
 namespace Prototype
 {
-    public class GameController : MonoBehaviour
+    public class ArenaController : MonoBehaviour
     {
-        [Header("Data")] 
-        [SerializeField] private TextAsset cardJson;
-
         [Header("Design")] 
         [SerializeField] private int drawAmount = 4;
         [SerializeField] private int cardLeftToNextTurn = 1;
@@ -103,17 +100,35 @@ namespace Prototype
             var fucksGiven = 0;
         }
 
-        private void Start()
+        public void StartArena(CardData[] cards)
         {
-            health = maxHealth;
-            var data = JsonConvert.DeserializeObject<CardData[]>(cardJson.text);
-            cardInitialCount = data.Length;
+            ResetState();
 
-            var random = data.OrderBy(_ => Random.value);
+            cardInitialCount = cards.Length;
+            var random = cards.OrderBy(_ => Random.value);
             foreach (var card in random)
                 deck.Enqueue(card);
 
             NextTurn();
+        }
+
+        private void ResetState()
+        {
+            roomCount = 0;
+            currentRunCooldown = 0;
+            health = maxHealth;
+            discarded.Clear();
+            ClearCards();
+            selectedCard = null;
+            equippedWeapon = CardData.Empty;
+        }
+
+        private void ClearCards()
+        {
+            foreach (var card in spawnedCards)
+                Destroy(card.gameObject);
+            
+            spawnedCards.Clear();
         }
 
         private void NextTurn()
