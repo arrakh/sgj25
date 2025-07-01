@@ -92,7 +92,7 @@ namespace Prototype
             fightActionButton.gameObject.SetActive(hasSelected && hasEquipped && selectedCard.Type == CardType.Monster );
             equippedCard.gameObject.SetActive(hasEquipped);
             
-            runActionButton.gameObject.SetActive(roomCount > 1);
+            //runActionButton.gameObject.SetActive(roomCount > 1);
             var canRun = currentRunCooldown <= 0;
             runActionText.text = canRun ? "Run Away" : $"Cannot Run ({currentRunCooldown})";
             runActionButton.interactable = canRun;
@@ -178,7 +178,7 @@ namespace Prototype
             foreach (var card in ordered)
             {
                 var text = Instantiate(infoPrefab, infoParent);
-                text.text = $"- {card.type} - {card.value}";
+                text.text = $"- <size=40%>({card.type})</size> {card.displayName} - {card.value}";
                 spawnedInfo.Add(text);
             }
 
