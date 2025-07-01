@@ -27,7 +27,6 @@
   "health-potion-12",
   "health-potion-13",
 
-  "gladiator-1",
   "gladiator-2",
   "gladiator-3",
   "gladiator-4",
@@ -40,8 +39,8 @@
   "gladiator-11",
   "gladiator-12",
   "gladiator-13",
+  "gladiator-14",
 
-  "gladiator-1",
   "gladiator-2",
   "gladiator-3",
   "gladiator-4",
@@ -53,5 +52,6 @@
   "gladiator-10",
   "gladiator-11",
   "gladiator-12",
-  "gladiator-13"
+  "gladiator-13",
+  "gladiator-14"
 ]

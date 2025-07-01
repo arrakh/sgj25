@@ -6,12 +6,14 @@ using UnityEngine.UI;
 
 namespace Prototype
 {
+    //Too monolithic and only specific to arena, should've been visual only
     public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
+        [SerializeField] private Button cardButton;
         [SerializeField] private Image icon;
-        [SerializeField] private Sprite weapon, monster, potion;
         [SerializeField] private TextMeshProUGUI valueText;
         [SerializeField] private Image highlight, lockedImage;
+        [SerializeField] private TextMeshProUGUI nameText;
 
         public CardType Type { private set; get; }
         public CardData Data { private set; get; }
@@ -21,24 +23,30 @@ namespace Prototype
         private bool isLocked;
 
         private Action<Card> pickedCallback;
-        
+
+        private void Awake()
+        {
+            cardButton.onClick.AddListener(Pick);
+        }
+
+        //Should rely on a separate class that tracks instance of a runtime card
         public void Display(CardData data, Action<Card> onCardPicked)
         {
             Data = data;
             Value = data.value;
             Type = data.type;
 
+            nameText.text = data.displayName;
+            
             pickedCallback = onCardPicked;
 
             valueText.text = Value.ToString();
-            icon.sprite = Type switch
-            {
-                CardType.Weapon => weapon,
-                CardType.Monster => monster,
-                CardType.Potion => potion,
-                _ => throw new ArgumentOutOfRangeException(nameof(Type), Type, null)
-            };
+            icon.sprite = SpriteDatabase.Get(data.spriteId);
+            
+            OnDisplay(data);
         }
+
+        protected virtual void OnDisplay(CardData data){}
 
         public void Pick()
         {
