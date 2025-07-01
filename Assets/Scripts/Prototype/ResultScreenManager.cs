@@ -91,12 +91,23 @@ namespace Prototype
             int endValue = score + data.value;
             score = endValue;
 
+            // 🔢 Animasi naik skor + scale text
             DOTween.To(() => startValue, x =>
             {
                 startValue = x;
                 scoreText.text = $"Score: {startValue}";
-            }, endValue, 0.3f);
-
+            }, endValue, 0.3f).OnStart(() =>
+            {
+                // Scale up
+                scoreText.rectTransform.DOScale(1.3f, 0.15f)
+                    .SetEase(Ease.OutBack)
+                    .OnComplete(() =>
+                    {
+                        // Scale back to normal
+                        scoreText.rectTransform.DOScale(1f, 0.15f)
+                            .SetEase(Ease.OutBack);
+                    });
+            });
             // 💢 Shake panel
             if (panelToShake != null)
             {
