@@ -91,8 +91,8 @@ namespace Prototype
                 deck.RemoveAt(0);
 
                 GameObject cardObj = Instantiate(cardPrefab, deckPosition);
-                var cardScript = cardObj.GetComponent<Card>();
-                cardScript.Display(cardData, OnCardPicked);
+                var cardScript = cardObj.GetComponent<CardVisual>();
+                cardScript.Display(new CardInstance(cardData), OnCardPicked);
 
                 cardObj.transform.localScale = Vector3.zero;
                 cardObj.transform.DOScale(Vector3.one, 0.25f).SetEase(Ease.OutBack);
@@ -102,9 +102,9 @@ namespace Prototype
             }
         }
 
-        void OnCardPicked(Card pickedCard)
+        void OnCardPicked(CardVisual pickedCardVisual)
         {
-            Debug.Log($"Picked: {pickedCard.Type} - {pickedCard.Value}");
+            Debug.Log($"Picked: {pickedCardVisual.Type} - {pickedCardVisual.Value}");
         }
     }
 }

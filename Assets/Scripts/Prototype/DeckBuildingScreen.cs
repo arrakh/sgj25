@@ -35,9 +35,10 @@ namespace Prototype
         [SerializeField] private Button fightButton;
         [SerializeField] private Button clearButton;
         
+        [FormerlySerializedAs("deckCardPrefab")]
         [Header("Prefabs")] 
-        [SerializeField] private DeckCard deckCardPrefab;
-        [SerializeField] private LibraryCard libraryCardPrefab;
+        [SerializeField] private DeckCardVisual deckCardVisualPrefab;
+        [FormerlySerializedAs("libraryCardPrefab")] [SerializeField] private LibraryCardVisual libraryCardVisualPrefab;
 
         [Header("Data")] 
         [SerializeField] private Gradient hypeGradient;
@@ -45,8 +46,8 @@ namespace Prototype
         public bool CompleteBuilding { get; private set; } = false;
         public CardData[] Deck => currentDeck.Select(x => x.Data).ToArray();
         
-        private List<DeckCard> currentDeck = new();
-        private Dictionary<string, LibraryCard> currentLibrary = new();
+        private List<DeckCardVisual> currentDeck = new();
+        private Dictionary<string, LibraryCardVisual> currentLibrary = new();
 
         private int hype = 0;
         private int hypeMin = 0;
@@ -102,46 +103,46 @@ namespace Prototype
             //fightButton.interactable = hype >= hypeMin;
         }
 
-        private void OnLibraryCardPicked(Card card)
+        private void OnLibraryCardPicked(CardVisual cardVisual)
         {
-            Debug.Log($"PICKED LIBRARY {card.Data.id}");
-            if (card is not LibraryCard libraryCard) throw new Exception("HUH???");
+            Debug.Log($"PICKED LIBRARY {cardVisual.Data.id}");
+            if (cardVisual is not LibraryCardVisual libraryCard) throw new Exception("HUH???");
             
             //this is stupid, the card should be visual only, not handling amount logic
             if (libraryCard.Amount <= 1)
             {
                 Destroy(libraryCard.gameObject);
-                currentLibrary.Remove(card.Data.id);
+                currentLibrary.Remove(cardVisual.Data.id);
             }
             else libraryCard.SetAmount(libraryCard.Amount - 1);
 
-            AddDeckCard(card.Data);
+            AddDeckCard(cardVisual.Data);
             
             RecalculateHype();
         }
 
-        private void OnDeckCardPicked(Card card)
+        private void OnDeckCardPicked(CardVisual cardVisual)
         {
-            Debug.Log($"PICKED DECK {card.Data.id}");
+            Debug.Log($"PICKED DECK {cardVisual.Data.id}");
 
-            if (card is not DeckCard deckCard) throw new Exception("HUH???");
+            if (cardVisual is not DeckCardVisual deckCard) throw new Exception("HUH???");
 
             currentDeck.Remove(deckCard);
-            AddLibraryCard(card.Data);
+            AddLibraryCard(cardVisual.Data);
             
             Destroy(deckCard.gameObject);
             RecalculateHype();
         }
 
-        private DeckCard AddDeckCard(CardData card)
+        private DeckCardVisual AddDeckCard(CardData card)
         {
-            var newCard = Instantiate(deckCardPrefab, deckCardParent);
-            newCard.Display(card, OnDeckCardPicked);
+            var newCard = Instantiate(deckCardVisualPrefab, deckCardParent);
+            newCard.Display(new CardInstance(card), OnDeckCardPicked);
             currentDeck.Add(newCard);
             return newCard;
         }
 
-        private LibraryCard AddLibraryCard(CardData card)
+        private LibraryCardVisual AddLibraryCard(CardData card)
         {
             if (currentLibrary.TryGetValue(card.id, out var libraryCard))
             {
@@ -150,8 +151,8 @@ namespace Prototype
             }
             else
             {
-                var newCard = Instantiate(libraryCardPrefab, libraryCardParent);
-                newCard.Display(card, OnLibraryCardPicked);
+                var newCard = Instantiate(libraryCardVisualPrefab, libraryCardParent);
+                newCard.Display(new CardInstance(card), OnLibraryCardPicked);
                 currentLibrary[card.id] = newCard;
                 newCard.SetAmount(1);
                 return newCard;

@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using Prototype.CardComponents;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -7,7 +9,7 @@ using UnityEngine.UI;
 namespace Prototype
 {
     //Too monolithic and only specific to arena, should've been visual only
-    public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+    public class CardVisual : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         [SerializeField] private Button cardButton;
         [SerializeField] private Image icon;
@@ -15,38 +17,39 @@ namespace Prototype
         [SerializeField] private Image highlight, lockedImage;
         [SerializeField] private TextMeshProUGUI nameText;
 
-        public CardType Type { private set; get; }
-        public CardData Data { private set; get; }
-        public int Value { set; get; }
-        
+        public CardType Type => instance.Data.type;
+        public CardData Data => instance.Data;
+        public CardInstance Instance => instance;
+        public int Value => instance.Data.value;
+
+        private CardInstance instance;
+
+
         private bool isSelected;
         private bool isLocked;
 
-        private Action<Card> pickedCallback;
+        private Action<CardVisual> pickedCallback;
 
         private void Awake()
         {
             cardButton.onClick.AddListener(Pick);
         }
 
-        //Should rely on a separate class that tracks instance of a runtime card
-        public void Display(CardData data, Action<Card> onCardPicked)
+        public void Display(CardInstance cardInstance, Action<CardVisual> onCardPicked)
         {
-            Data = data;
-            Value = data.value;
-            Type = data.type;
+            instance = cardInstance;
 
-            nameText.text = data.displayName;
+            nameText.text = instance.Data.displayName;
             
             pickedCallback = onCardPicked;
 
             valueText.text = Value.ToString();
-            icon.sprite = SpriteDatabase.Get(data.spriteId);
+            icon.sprite = SpriteDatabase.Get(instance.Data.spriteId);
             
-            OnDisplay(data);
+            OnDisplay(instance);
         }
 
-        protected virtual void OnDisplay(CardData data){}
+        protected virtual void OnDisplay(CardInstance instance){}
 
         public void Pick()
         {

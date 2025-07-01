@@ -4,18 +4,18 @@ using UnityEngine;
 namespace Prototype
 {
     //Shouldn't even inherit from Card if it wasnt too monolithic
-    public class DeckCard : Card
+    public class DeckCardVisual : CardVisual
     {
         [SerializeField] private TextMeshProUGUI hypeLabel;
         [SerializeField] private Color goodHype, badHype;
         
         //Bad because copied from LibraryCard but this is a systemic issue
-        protected override void OnDisplay(CardData data)
+        protected override void OnDisplay(CardInstance instance)
         {
-            base.OnDisplay(data);
+            base.OnDisplay(instance);
 
-            hypeLabel.text = data.cost.ToString();
-            hypeLabel.color = data.cost > 0 ? goodHype : badHype;
+            hypeLabel.text = instance.Data.cost.ToString();
+            hypeLabel.color = instance.Data.cost > 0 ? goodHype : badHype;
         }
     }
 }

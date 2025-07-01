@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Prototype
 {
     //Shouldn't even inherit from Card if it wasnt too monolithic
-    public class LibraryCard : Card
+    public class LibraryCardVisual : CardVisual
     {
         [SerializeField] private TextMeshProUGUI amountText;
 
@@ -14,12 +14,12 @@ namespace Prototype
         public int Amount => amount;
         private int amount;
 
-        protected override void OnDisplay(CardData data)
+        protected override void OnDisplay(CardInstance instance)
         {
-            base.OnDisplay(data);
+            base.OnDisplay(instance);
 
-            hypeLabel.text = data.cost.ToString();
-            hypeLabel.color = data.cost > 0 ? goodHype : badHype;
+            hypeLabel.text = instance.Data.cost.ToString();
+            hypeLabel.color = instance.Data.cost > 0 ? goodHype : badHype;
         }
 
         //this function kinda stupid because amount data is here, should be visual only

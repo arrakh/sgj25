@@ -2061,8 +2061,8 @@ MonoBehaviour:
   hypeValue: {fileID: 154059999}
   fightButton: {fileID: 152707232}
   clearButton: {fileID: 906411699}
-  deckCardPrefab: {fileID: 3321330789849046082, guid: a78fb063ecce14a408c2582a526c21d9, type: 3}
-  libraryCardPrefab: {fileID: 8636956562528605680, guid: 5ddcd480020acc54fbdd73902c810929, type: 3}
+  deckCardVisualPrefab: {fileID: 3321330789849046082, guid: a78fb063ecce14a408c2582a526c21d9, type: 3}
+  libraryCardVisualPrefab: {fileID: 8636956562528605680, guid: 5ddcd480020acc54fbdd73902c810929, type: 3}
   hypeGradient:
     serializedVersion: 2
     key0: {r: 0.74509805, g: 0.9607844, b: 0.28627452, a: 1}
@@ -4886,6 +4886,8 @@ MonoBehaviour:
   defeatedContainer: {fileID: 803502551}
   remainingContainer: {fileID: 1577450642}
   resultCardPrefab: {fileID: 8541070933285381615, guid: 3d643b3d34b2a15488671201ab11c6f8, type: 3}
+  panelToShake: {fileID: 0}
+  confettiPrefab: {fileID: 0}
   delayBetweenCards: 0.3
 --- !u!114 &1213442954
 MonoBehaviour:
@@ -4961,7 +4963,7 @@ MonoBehaviour:
   cardParent: {fileID: 1908521399}
   roomText: {fileID: 1689858108}
   healthText: {fileID: 70977428}
-  equippedCard: {fileID: 1819633934}
+  equippedCardVisual: {fileID: 1273474293376517033}
   equippedValueText: {fileID: 803895417}
   standardActionButton: {fileID: 1435516102}
   standardActionText: {fileID: 642438012}
@@ -4974,7 +4976,7 @@ MonoBehaviour:
   dungeonProgress: {fileID: 1771341852}
   resultScreen: {fileID: 1707870675}
   resultScreenText: {fileID: 0}
-  cardPrefab: {fileID: 1462169085050979162, guid: 3d643b3d34b2a15488671201ab11c6f8, type: 3}
+  cardVisualPrefab: {fileID: 8229494624937284772, guid: 3d643b3d34b2a15488671201ab11c6f8, type: 3}
   infoPrefab: {fileID: 1148288956178957565, guid: eb570aa9ee7898242b521bfea7879ee3, type: 3}
 --- !u!4 &1270304398
 Transform:
@@ -5074,7 +5076,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 993679137}
   m_Direction: 0
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.9999999
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -6931,7 +6933,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1432259306}
   m_Direction: 0
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.9999999
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -6979,17 +6981,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1219621445101840200, guid: 3d643b3d34b2a15488671201ab11c6f8, type: 3}
   m_PrefabInstance: {fileID: 1273474293376517032}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1819633934 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1462169085050979162, guid: 3d643b3d34b2a15488671201ab11c6f8, type: 3}
-  m_PrefabInstance: {fileID: 1273474293376517032}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94ea55aba9a1f4e49955ca70a3a5704b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1825667749
 GameObject:
   m_ObjectHideFlags: 0
@@ -7838,6 +7829,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3d643b3d34b2a15488671201ab11c6f8, type: 3}
+--- !u!114 &1273474293376517033 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8229494624937284772, guid: 3d643b3d34b2a15488671201ab11c6f8, type: 3}
+  m_PrefabInstance: {fileID: 1273474293376517032}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3db72c9acb1150845bda3097bed1bbd0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
