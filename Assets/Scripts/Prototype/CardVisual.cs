@@ -87,5 +87,10 @@ namespace Prototype
             if (isSelected) return;
             highlight.gameObject.SetActive(false);
         }
+
+        private void OnEnable()
+        {
+            highlight.gameObject.SetActive(false);
+        }
     }
 }
