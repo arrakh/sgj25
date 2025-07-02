@@ -16,6 +16,7 @@ namespace Prototype
         [SerializeField] private TextMeshProUGUI valueText;
         [SerializeField] private Image highlight, lockedImage;
         [SerializeField] private TextMeshProUGUI nameText;
+        [SerializeField] private CardComponentVisualController componentController;
 
         public CardType Type => instance.Data.type;
         public CardData Data => instance.Data;
@@ -37,6 +38,9 @@ namespace Prototype
 
         public void Display(CardInstance cardInstance, Action<CardVisual> onCardPicked)
         {
+            if (instance == null || instance.Data.id.Equals(cardInstance.Data.id))
+                componentController.Display(cardInstance);
+            
             instance = cardInstance;
 
             nameText.text = instance.Data.displayName;

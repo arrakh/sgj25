@@ -2,18 +2,11 @@
 
 namespace Prototype.CardComponents.Implementations
 {
-    public class DrainComponent : ICardComponent, IOnDestroyMonsterWithWeapon
+    public class DrainComponent : CardComponent, IOnDestroyMonsterWithWeapon
     {
-        public string DisplayName => $"Drain";
-        public string Description => $"When defeating enemies, Heal for half that enemy's health rounded down";
-        public string[] Aliases => new[] {"ranged", "range"};
-
-        private CardInstance instance;
-
-        public void Initialize(CardInstance cardInstance, string[] args)
-        {
-            instance = cardInstance;
-        }
+        public override string DisplayName => $"Drain";
+        public override string Description => $"When defeating enemies, Heal for half that enemy's health rounded down";
+        public override string[] Aliases => new[] {"ranged", "range"};
 
         public void OnDestroy(ArenaController arena, CardInstance monster, CardInstance weapon)
         {

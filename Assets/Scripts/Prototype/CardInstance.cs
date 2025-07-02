@@ -18,10 +18,10 @@ namespace Prototype
         }
 
         public CardData Data => data;
-        public IEnumerable<ICardComponent> Components => components;
+        public IEnumerable<CardComponent> Components => components;
 
         private CardData data;
-        private List<ICardComponent> components = new();
+        private List<CardComponent> components = new();
 
         public void SetValue(int newValue)
         {

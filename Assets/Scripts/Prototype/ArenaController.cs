@@ -23,10 +23,12 @@ namespace Prototype
         
         [Header("Scene References")] 
         [SerializeField] private RectTransform cardParent;
+        [SerializeField] private RectTransform nextCardsParent;
         [SerializeField] private TextMeshProUGUI roomText;
         [SerializeField] private TextMeshProUGUI healthText;
         
-        [FormerlySerializedAs("equippedCard")] [SerializeField] private CardVisual equippedCardVisual;
+        [SerializeField] private CardVisual equippedToolVisual;
+        [SerializeField] private CardVisual equippedCardVisual;
         [SerializeField] private TextMeshProUGUI equippedValueText;
 
         [SerializeField] private Button standardActionButton;
@@ -48,10 +50,15 @@ namespace Prototype
         [FormerlySerializedAs("cardPrefab")]
         [Header("Prefabs")] 
         [SerializeField] private CardVisual cardVisualPrefab;
+        [SerializeField] private CardVisual nextCardVisualPrefab;
         [SerializeField] private TextMeshProUGUI infoPrefab;
 
+        public CardInstance EquippedTool => equippedTool;
+        public CardInstance EquippedWeapon => equippedWeapon;
+        
         private Queue<CardInstance> deck = new();
         private List<CardVisual> spawnedCards = new();
+        private List<CardVisual> spawnedNextCards = new();
         private List<CardInstance> discarded = new();
         private List<TextMeshProUGUI> spawnedInfo = new();
         private int health;
@@ -61,6 +68,7 @@ namespace Prototype
 
         private CardVisual selectedCardVisual;
         private CardInstance equippedWeapon = null;
+        private CardInstance equippedTool = null;
 
         private void Awake()
         {
@@ -89,11 +97,13 @@ namespace Prototype
             healthText.text = $" {health}<size=33%>/{maxHealth}";
 
             var hasSelected = selectedCardVisual != null;
-            var hasEquipped = equippedWeapon != null;
+            var hasEquippedWeapon = equippedWeapon != null;
+            var hasEquippedTool = equippedTool != null;
             
             standardActionButton.gameObject.SetActive(hasSelected);
-            fightActionButton.gameObject.SetActive(hasSelected && hasEquipped && selectedCardVisual.Type == CardType.Monster );
-            equippedCardVisual.gameObject.SetActive(hasEquipped);
+            fightActionButton.gameObject.SetActive(hasSelected && hasEquippedWeapon && selectedCardVisual.Type == CardType.Monster );
+            equippedCardVisual.gameObject.SetActive(hasEquippedWeapon);
+            equippedToolVisual.gameObject.SetActive(hasEquippedTool);
             
             //runActionButton.gameObject.SetActive(roomCount > 1);
             var canRun = currentRunCooldown <= 0;
@@ -124,6 +134,8 @@ namespace Prototype
             ClearCards();
             selectedCardVisual = null;
             equippedWeapon = null;
+            
+            nextCardsParent.gameObject.SetActive(false);
         }
 
         private void ClearCards()
@@ -142,29 +154,71 @@ namespace Prototype
                 return;
             }
 
-            if (spawnedCards.Count <= cardLeftToNextTurn) NextRoom();
+            if (spawnedCards.Count <= cardLeftToNextTurn) NextRound();
 
             UpdateInfo();
 
             if (deck.Count <= 0 && spawnedCards.Count <= 0) Victory();
         }
 
-        private void NextRoom()
+        private void NextRound()
         {
             if (currentRunCooldown > 0) currentRunCooldown--;
             roomCount++;
-            roomText.text = $"Room {roomCount}";
-            
+            roomText.text = $"Round {roomCount}";
+
+            var remainingCards = new List<CardInstance>();
+            foreach (var card in spawnedCards)
+                remainingCards.Add(card.Instance);
+
             //Spawn Cards
             for (int i = spawnedCards.Count; i < drawAmount; i++)
             {
                 if (deck.Count <= 0) break;
-                var card = deck.Dequeue();
-                var cardObj = Instantiate(cardVisualPrefab, cardParent);
+                SpawnCard();
+            }
+
+            UpdateNextCards();
+            
+            var components = new List<CardComponent>();
+            if (equippedWeapon != null) components.AddRange(equippedWeapon.Components);
+            if (equippedTool != null) components.AddRange(equippedTool.Components);
+            
+            if (remainingCards.Count > 0)
+                foreach (var card in remainingCards)
+                    components.AddRange(card.Components);
+            
+            foreach (var component in components)
+                if(component is IOnNewRound newRound) newRound.OnNewRound(this);
+        }
+
+        private void SpawnCard()
+        {
+            var card = deck.Dequeue();
+            var cardObj = Instantiate(cardVisualPrefab, cardParent);
+            cardObj.Display(card, OnCardPicked);
+
+            spawnedCards.Add(cardObj);
+        }
+
+        private void UpdateNextCards()
+        {
+            ClearNextCards();
+            var nextCards = deck.Take(Mathf.Min(drawAmount, deck.Count));
+            foreach (var card in nextCards)
+            {
+                var cardObj = Instantiate(nextCardVisualPrefab, nextCardsParent);
                 cardObj.Display(card, OnCardPicked);
                 
-                spawnedCards.Add(cardObj);
+                spawnedNextCards.Add(cardObj);
             }
+        }
+
+        private void ClearNextCards()
+        {
+            foreach (var card in spawnedNextCards)
+                Destroy(card.gameObject);
+            spawnedNextCards.Clear();
         }
 
         private void UpdateInfo()
@@ -200,7 +254,8 @@ namespace Prototype
             {
                 CardType.Weapon => "Equip",
                 CardType.Monster => "Fight Barehanded",
-                CardType.Potion => "Heal",
+                CardType.Item => "Use",
+                CardType.Tool => "Equip",
                 _ => throw new ArgumentOutOfRangeException()
             };
 
@@ -211,19 +266,30 @@ namespace Prototype
         private void OnStandardAction()
         {
             if (selectedCardVisual == null) return;
-            
+
             switch (selectedCardVisual.Type)
             {
                 case CardType.Weapon: OnEquipWeaponAction(); return;
                 case CardType.Monster: OnFightWithBareHandsAction(); return;
-                case CardType.Potion: OnHealAction(); return;
+                case CardType.Item: OnUseAction(); return;
+                case CardType.Tool: OnEquipToolAction(); return;
                 default: throw new ArgumentOutOfRangeException();
             }
         }
 
-        private void OnHealAction()
+        private void OnEquipToolAction()
         {
-            AddHealth(selectedCardVisual.Value);
+            equippedTool = selectedCardVisual.Instance;
+            equippedCardVisual.Display(equippedTool, null);
+            
+            ConsumeSelectedCard();
+        }
+
+        private void OnUseAction()
+        {
+            foreach (var component in selectedCardVisual.Instance.Components)
+                if (component is IOnItemUse comp) comp.OnItemUse(this);
+            
             ConsumeSelectedCard();
         }
 
@@ -233,13 +299,39 @@ namespace Prototype
             ConsumeSelectedCard();
         }
 
+        public void SetShowNextCards(bool show) => nextCardsParent.gameObject.SetActive(show);
+
         public void AddHealth(int amount)
         {
-            health += amount;
+            var finalAmount = amount;
+            
+            var components = new List<CardComponent>();
+            if (equippedWeapon != null) components.AddRange(equippedWeapon.Components);
+            if (equippedTool != null) components.AddRange(equippedTool.Components);
+            
+            if (amount < 0)
+            {
+                var damage = -finalAmount;
+                foreach (var comp in components)    
+                    if (comp is IModifyIncomingDamage dmg) 
+                        dmg.Modify(this, ref damage);
+                finalAmount = -damage;
+            }
+
+            if (amount > 0)
+            {
+                foreach (var comp in components)    
+                    if (comp is IModifyIncomingHeal heal) 
+                        heal.Modify(this, ref finalAmount);
+            }
+
+            if (finalAmount == 0) return;
+            
+            health += finalAmount;
             health = Math.Clamp(health, 0, maxHealth);
 
-            var shakeDur = Mathf.Clamp01(amount / 10f);
-            var color = amount > 0 ? Color.green : Color.red;
+            var shakeDur = Mathf.Clamp01(finalAmount / 10f);
+            var color = finalAmount > 0 ? Color.green : Color.red;
             ShakeColorAnimateText(healthText, color, Mathf.Lerp(0.2f, 1.2f, shakeDur));
         }
 
@@ -248,33 +340,45 @@ namespace Prototype
             if (equippedWeapon == null) throw new Exception("EQUIPPED WEAPON IS EMPTY??");
 
             var remainder = equippedWeapon.Data.value - selectedCardVisual.Value;
+            
+            var components = new List<CardComponent>();
+            if (equippedWeapon != null) components.AddRange(equippedWeapon.Components);
+            if (equippedTool != null) components.AddRange(equippedTool.Components);
+            components.AddRange(selectedCardVisual.Instance.Components);
 
             if (remainder < 0) //monster is stronger
             {
-                health += remainder;
+                var damage = -remainder;
+                foreach (var component in components)
+                    if (component is IModifyOverkillDamage modify) 
+                        modify.Modify(this, ref damage);
                 
-                var shakeDur = Mathf.Clamp01(remainder / 10f);
-                ShakeColorAnimateText(healthText, Color.red, Mathf.Lerp(0.2f, 1.2f, shakeDur));
+                AddHealth(-damage);
             }
             else //monster is weaker
             {
                 int newValue = selectedCardVisual.Value;
 
-                foreach (var component in equippedWeapon.Components)
+                foreach (var component in components)
                     if (component is IMitigateWeaponDegrade mitigate) 
                         mitigate.Mitigate(ref newValue);
                 
-                equippedWeapon.SetValue(newValue);
-                
-                equippedCardVisual.Display(equippedWeapon, null);
-                
-                ShakeColorAnimateText(equippedValueText, Color.red, 0.3f);
+                SetWeaponValue(newValue);
             }
 
-            foreach (var component in equippedWeapon.Components)
+            foreach (var component in components)
                 if (component is IOnDestroyMonsterWithWeapon comp) 
                     comp.OnDestroy(this, selectedCardVisual.Instance, equippedWeapon);
             ConsumeSelectedCard();
+        }
+
+        public void SetWeaponValue(int newValue)
+        {
+            var color = newValue > equippedWeapon.Data.value ? Color.green : Color.red;
+
+            equippedWeapon.SetValue(newValue);
+            equippedCardVisual.Display(equippedWeapon, null);
+            ShakeColorAnimateText(equippedValueText, color, 0.3f);
         }
 
         private void OnEquipWeaponAction()
@@ -309,16 +413,41 @@ namespace Prototype
             equippedWeapon = null;
         }
 
+
+        public void UnequipTool()
+        {
+            equippedTool = null;
+        }
+
+        public void SwapRandom(CardInstance source)
+        {
+            var rand = spawnedCards.Where(x => !x.Instance.Equals(source))
+                .OrderBy(_ => Random.value).FirstOrDefault();
+            
+            Debug.Log($"WILL SWAP FROM {source.Data.id}");
+
+            if (rand == default) return;
+
+            Debug.Log($"GOT RANDOM {rand.Data.id}");
+            
+            ConsumeCard(rand);
+            SpawnCard();
+            UpdateNextCards();
+        }
+
         private void ConsumeSelectedCard()
         {
-            spawnedCards.Remove(selectedCardVisual);
-            
-            discarded.Add(selectedCardVisual.Instance);
-            
-            Destroy(selectedCardVisual.gameObject);
-            
-            selectedCardVisual = null;
+            ConsumeCard(selectedCardVisual);
+        }
 
+        private void ConsumeCard(CardVisual card)
+        {
+            if (card.Equals(selectedCardVisual)) selectedCardVisual = null;
+
+            spawnedCards.Remove(card);
+            discarded.Add(card.Instance);
+            Destroy(card.gameObject);
+            
             NextTurn();
         }
 

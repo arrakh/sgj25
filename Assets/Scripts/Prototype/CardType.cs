@@ -5,7 +5,7 @@
         None,
         Weapon,
         Monster,
-        Utility,
-        Potion
+        Tool,
+        Item
     }
 }

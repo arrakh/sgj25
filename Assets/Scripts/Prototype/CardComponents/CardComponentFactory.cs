@@ -26,14 +26,14 @@ namespace Prototype.CardComponents
                         return ex.Types.Where(t => t != null)!;
                     }
                 })
-                .Where(type => typeof(ICardComponent)
+                .Where(type => typeof(CardComponent)
                     .IsAssignableFrom(type) && type.IsClass && !type.IsAbstract)
                 .ToList();
 
             foreach (var type in types)
                 try
                 {
-                    var instance = (ICardComponent) Activator.CreateInstance(type);
+                    var instance = (CardComponent) Activator.CreateInstance(type);
                     foreach (var alias in instance.Aliases)
                         if (!_cache.ContainsKey(alias))
                             _cache[alias] = type;
@@ -47,7 +47,7 @@ namespace Prototype.CardComponents
                 }
         }
 
-        public static ICardComponent Create(CardInstance cardInstance, string component)
+        public static CardComponent Create(CardInstance cardInstance, string component)
         {
             if (_cache == null)
             {
@@ -61,7 +61,7 @@ namespace Prototype.CardComponents
             if (_cache.TryGetValue(split[0], out var type))
                 try
                 {
-                    var instance = (ICardComponent) Activator.CreateInstance(type);
+                    var instance = (CardComponent) Activator.CreateInstance(type);
                     instance.Initialize(cardInstance, args);
                     return instance;
                 }

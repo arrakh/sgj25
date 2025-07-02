@@ -25,30 +25,6 @@ namespace Prototype
 
         private int score = 0;
 
-        void Start()
-        {
-            // Dummy data saat Play untuk testing result screen
-            List<CardData> defeated = new List<CardData>
-            {
-                new CardData { type = CardType.Monster, value = 10 },
-                new CardData { type = CardType.Monster, value = 15 },
-                new CardData { type = CardType.Monster, value = 20 },
-                new CardData { type = CardType.Monster, value = 5 },
-                new CardData { type = CardType.Monster, value = 20 },
-            };
-
-            List<CardData> remaining = new List<CardData>
-            {
-                new CardData { type = CardType.Weapon, value = 5 },
-                new CardData { type = CardType.Potion, value = 8 },
-                new CardData { type = CardType.Potion, value = 10 },
-                new CardData { type = CardType.Potion, value = 10 },
-                new CardData { type = CardType.Potion, value = 100 },
-            };
-
-            ShowResult(false, defeated, remaining);
-        }
-
         public void ShowResult(bool isAlive, List<CardData> defeated, List<CardData> remaining)
         {
             resultText.text = isAlive ? "You lived" : "You died";
