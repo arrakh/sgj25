@@ -1,10 +1,11 @@
 ﻿using Prototype.CardComponents;
+using Prototype.Tooltip;
 using TMPro;
 using UnityEngine;
 
 namespace Prototype
 {
-    public class CardComponentVisual : MonoBehaviour
+    public class CardComponentVisual : MonoBehaviour, ITooltipElement
     {
         [SerializeField] private TextMeshProUGUI content;
 
@@ -23,5 +24,11 @@ namespace Prototype
         {
             content.text = obj.DisplayName;
         }
+
+        public bool HasData() => component != null;
+
+        public TooltipData GetData() => new(component.DisplayName, component.Description);
+
+        public int UniqueId => gameObject.GetInstanceID();
     }
 }
