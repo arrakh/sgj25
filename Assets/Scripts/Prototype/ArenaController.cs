@@ -432,6 +432,26 @@ namespace Prototype
             NextTurn();
         }
 
+        private void ConcludeGame(bool win)
+        {
+            /*var enemyDefeated = discarded.Select(x => x.Data.type == CardType.Monster);
+
+            List<CardInstance> itemsLeft = new();
+
+            foreach (var card in deck)
+            {
+                switch (card.Data.type)
+                {
+                    case CardType.Weapon:
+                    case CardType.Item:
+                        itemsLeft.Add(card);
+                        break;
+                }
+            }
+
+            gameResult = new GameResult(win, )*/
+        }
+
         private void Death()
         {
             
