@@ -29,7 +29,7 @@ namespace Prototype
             if (!gameDb.TryInitialize())
                 throw new Exception("CANNOT INITIALIZE GAME DB, CHECK WHATS WRONG WITH DATA");
 
-            deckBuildingScreen.Initialize(132);
+            deckBuildingScreen.Initialize(55);
             deckBuildingScreen.gameObject.SetActive(true);
 
             
