@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 757fa3dd1d2f452f8ec85c0ffac4f954, type: 3}
+  m_Name: CardBanner
+  m_EditorClassIdentifier: 
+  sprites:
+  - id: card-banner-red
+    sprite: {fileID: 146767142127477615, guid: 8cb1164013886164191990ca09c78513, type: 3}
+  - id: card-banner-yellow
+    sprite: {fileID: -295141642769309949, guid: 6583268421bba504da292071621c7b9b, type: 3}
+  - id: card-banner-purple
+    sprite: {fileID: 8879769982951216895, guid: f71a9097ed388f24fb9d44b52701d9a9, type: 3}
+  - id: card-banner-blue
+    sprite: {fileID: -8086525916806606665, guid: 50a5f8cb297c571499efe334afeb973c, type: 3}

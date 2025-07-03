@@ -7,6 +7,7 @@ namespace Prototype
     public class ResultCardDisplay : MonoBehaviour
     {
         public Image icon;
+        public Image background;
         public TextMeshProUGUI valueText;
 
         public void Setup(CardData data)

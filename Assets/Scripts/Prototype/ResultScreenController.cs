@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,14 +8,16 @@ using DG.Tweening;
 
 namespace Prototype
 {
-    public class ResultScreenManager : MonoBehaviour
+    public class ResultScreenController : MonoBehaviour
     {
         [Header("UI References")]
         public TextMeshProUGUI resultText;
         public TextMeshProUGUI scoreText;
+        public TextMeshProUGUI targetScoreText;
         public Transform defeatedContainer;
         public Transform remainingContainer;
         public GameObject resultCardPrefab;
+        public Button nextButton;
 
         [Header("Effect References")]
         public RectTransform panelToShake;      // assign panel utama result screen
@@ -25,29 +28,35 @@ namespace Prototype
 
         private int score = 0;
 
-        public void ShowResult(bool isAlive, List<CardData> defeated, List<CardData> remaining)
-        {
-            resultText.text = isAlive ? "You lived" : "You died";
-            score = 0;
-            scoreText.text = "Score: 0";
+        private bool done = false;
 
-            StartCoroutine(PlayResult(defeated, remaining));
+        private void Awake()
+        {
+            nextButton.onClick.AddListener(() => done = true);
         }
 
-        private IEnumerator PlayResult(List<CardData> defeated, List<CardData> remaining)
+        public IEnumerator PlayResult(GameResult gameResult, int targetScore)
         {
-            foreach (var data in defeated)
-            {
-                yield return ShowCardAndAddScore(data, defeatedContainer);
-            }
+            nextButton.gameObject.SetActive(false);
 
-            foreach (var data in remaining)
-            {
-                yield return ShowCardAndAddScore(data, remainingContainer);
-            }
+            done = false;
+            resultText.text = gameResult.win ? "You lost..." : "You won!";
+            score = 0;
+            scoreText.text = "0";
+            targetScoreText.text = targetScore.ToString();
+            
+            foreach (var data in gameResult.enemyDefeated)
+                yield return ShowCardAndAddScore(data.Data, defeatedContainer);
+
+            foreach (var data in gameResult.itemsLeft)
+                yield return ShowCardAndAddScore(data.Data , remainingContainer);
 
             // 🎉 Confetti di akhir
             SpawnConfetti();
+
+            nextButton.gameObject.SetActive(true);
+
+            yield return new WaitUntil(() => done);
         }
 
         private IEnumerator ShowCardAndAddScore(CardData data, Transform container)
@@ -71,7 +80,7 @@ namespace Prototype
             DOTween.To(() => startValue, x =>
             {
                 startValue = x;
-                scoreText.text = $"Score: {startValue}";
+                scoreText.text = startValue.ToString();
             }, endValue, 0.3f).OnStart(() =>
             {
                 // Scale up

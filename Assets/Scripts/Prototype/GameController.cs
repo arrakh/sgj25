@@ -12,6 +12,7 @@ namespace Prototype
         [SerializeField] private ArenaController arenaController;
         [SerializeField] private DeckBuildingScreen deckBuildingScreen;
         [SerializeField] private GameDatabase gameDb;
+        [SerializeField] private ResultScreenController resultScreen;
 
         [Header("Data")]
         [SerializeField] private SpriteDatabase[] spriteDatabases;
@@ -31,6 +32,7 @@ namespace Prototype
 
             deckBuildingScreen.Initialize(55);
             deckBuildingScreen.gameObject.SetActive(true);
+            resultScreen.gameObject.SetActive(false);
 
             
             yield return new WaitUntil(() => deckBuildingScreen.CompleteBuilding);
@@ -39,6 +41,12 @@ namespace Prototype
             deckBuildingScreen.gameObject.SetActive(false);
             
             arenaController.StartArena(deck);
+            yield return new WaitUntil(() => !arenaController.IsGameRunning);
+            
+            resultScreen.gameObject.SetActive(true);
+            yield return resultScreen.PlayResult(arenaController.GameResult, 999);
+            
+            Debug.Log("DONE");
         }
     }
 }
