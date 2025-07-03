@@ -1,4 +1,5 @@
-﻿using Prototype.CardComponents;
+﻿using System;
+using Prototype.CardComponents;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,9 +9,13 @@ namespace Prototype
     {
         [SerializeField] private RectTransform visualParent;
         [SerializeField] private CardComponentVisual[] visuals;
-        
+
+        private CardInstance cardInstance;
+
         public void Display(CardInstance instance)
         {
+            cardInstance = instance;
+            
             int index = 0;
             foreach (var component in instance.Components)
             {
@@ -27,6 +32,14 @@ namespace Prototype
 
             for (int i = index; i < visuals.Length; i++)
                 visuals[i].gameObject.SetActive(false);
+        }
+
+        private void OnDestroy()
+        {
+            foreach (var component in cardInstance.Components)
+            {
+                component.OnUpdated -= OnComponentUpdated;
+            }
         }
 
         private void OnComponentUpdated(CardComponent component)
