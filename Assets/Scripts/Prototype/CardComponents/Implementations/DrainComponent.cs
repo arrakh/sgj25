@@ -6,7 +6,7 @@ namespace Prototype.CardComponents.Implementations
     {
         public override string DisplayName => $"Drain";
         public override string Description => $"When defeating enemies, Heal for half that enemy's health rounded down";
-        public override string[] Aliases => new[] {"ranged", "range"};
+        public override string[] Aliases => new[] {"drain"};
 
         public void OnDestroy(ArenaController arena, CardInstance monster, CardInstance weapon)
         {
