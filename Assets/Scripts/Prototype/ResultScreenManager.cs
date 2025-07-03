@@ -108,7 +108,7 @@ namespace Prototype
                             .SetEase(Ease.OutBack);
                     });
             });
-            // 💢 Shake panel
+            //  Shake panel
             if (panelToShake != null)
             {
                 panelToShake.DOShakeAnchorPos(0.3f, 15f, 10, 90);
