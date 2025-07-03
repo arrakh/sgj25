@@ -8384,6 +8384,7 @@ MonoBehaviour:
   nextCardsParent: {fileID: 697603627}
   roomText: {fileID: 1689858108}
   healthText: {fileID: 70977428}
+  healthSlider: {fileID: 1238323610}
   equippedToolVisual: {fileID: 832944554}
   equippedWeaponVisual: {fileID: 1897566379052332222}
   equippedValueText: {fileID: 3490024765795436644}
@@ -8392,8 +8393,6 @@ MonoBehaviour:
   fightActionButton: {fileID: 1825667751}
   runActionButton: {fileID: 458069523}
   runActionText: {fileID: 586687720}
-  resultScreen: {fileID: 1707870675}
-  resultScreenText: {fileID: 0}
   arenaInfo: {fileID: 1341483720}
   cardVisualPrefab: {fileID: 8229494624937284772, guid: 3d643b3d34b2a15488671201ab11c6f8, type: 3}
   nextCardVisualPrefab: {fileID: 4469046962928430216, guid: 81b5ec775e28c1048bde226f1eac0ffe, type: 3}
