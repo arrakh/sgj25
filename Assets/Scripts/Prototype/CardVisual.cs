@@ -17,6 +17,7 @@ namespace Prototype
         [SerializeField] private Image highlight, lockedImage;
         [SerializeField] private TextMeshProUGUI nameText;
         [SerializeField] private CardComponentVisualController componentController;
+        [SerializeField] private bool canSelect = true;
 
         public CardType Type => instance.Data.type;
         public CardData Data => instance.Data;
@@ -69,6 +70,7 @@ namespace Prototype
 
         public void SetSelected(bool selected)
         {
+            if (!canSelect) return;
             isSelected = selected;
             highlight.gameObject.SetActive(isSelected);
             if (!isSelected) return;
@@ -77,6 +79,7 @@ namespace Prototype
 
         public void OnPointerEnter(PointerEventData eventData)
         {
+            if (!canSelect) return;
             if (isSelected) return;
             highlight.color = Color.red;
             highlight.gameObject.SetActive(true);
@@ -84,6 +87,7 @@ namespace Prototype
 
         public void OnPointerExit(PointerEventData eventData)
         {
+            if (!canSelect) return;
             if (isSelected) return;
             highlight.gameObject.SetActive(false);
         }
