@@ -39,9 +39,6 @@ namespace Prototype
         
         [SerializeField] private Button runActionButton;
         [SerializeField] private TextMeshProUGUI runActionText;
-        
-        [SerializeField] private GameObject resultScreen;
-        [SerializeField] private TextMeshProUGUI resultScreenText;
 
         [SerializeField] private ArenaInfo arenaInfo;
 
@@ -51,6 +48,9 @@ namespace Prototype
 
         public CardInstance EquippedTool => equippedTool;
         public CardInstance EquippedWeapon => equippedWeapon;
+
+        public bool IsGameRunning => isGameRunning;
+        public GameResult GameResult => gameResult;
         
         private Queue<CardInstance> deck = new();
         private List<CardVisual> spawnedCards = new();
@@ -61,6 +61,10 @@ namespace Prototype
         private int roomCount = 0;
         private int currentRunCooldown = 0;
 
+        private bool isGameRunning = false;
+
+        private GameResult gameResult;
+
         private CardVisual selectedCardVisual;
         private CardInstance equippedWeapon = null;
         private CardInstance equippedTool = null;
@@ -70,17 +74,11 @@ namespace Prototype
             standardActionButton.onClick.AddListener(OnStandardAction);
             fightActionButton.onClick.AddListener(OnFightWithWeaponAction);
             runActionButton.onClick.AddListener(OnRunAction);
-            
-            resultScreen.SetActive(false);
         }
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                SceneManager.LoadScene(0);
-                return;
-            }
+            if (!isGameRunning) return;
             
             healthText.text = $" {health} / {maxHealth}";
             healthSlider.value = (float) health / maxHealth;
@@ -111,6 +109,8 @@ namespace Prototype
                 deck.Enqueue(new CardInstance(card));
             
             arenaInfo.Initialize(deck);
+
+            isGameRunning = true;
 
             NextTurn();
         }
@@ -434,14 +434,12 @@ namespace Prototype
 
         private void Death()
         {
-            resultScreen.SetActive(true);
-            resultScreenText.text = "You DIED! \n<size=40%>press [esc] to Retry";
+            
         }
 
         private void Victory()
         {
-            resultScreen.SetActive(true);
-            resultScreenText.text = "You WIN! \n<size=40%>press [esc] to Retry";
+            
         }
 
         private void ShakeColorAnimateText(TextMeshProUGUI text, Color color, float duration)
