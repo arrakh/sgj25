@@ -211,7 +211,7 @@ namespace Prototype
             foreach (var card in nextCards)
             {
                 var cardObj = Instantiate(nextCardVisualPrefab, nextCardsParent);
-                cardObj.Display(card, OnCardPicked);
+                cardObj.Display(card, null);
                 
                 spawnedNextCards.Add(cardObj);
             }
@@ -449,7 +449,7 @@ namespace Prototype
             text.transform.localScale = Vector3.one * 1.1f;
             text.transform.DOScale(Vector3.one, duration);
             text.transform.DOShakePosition(duration, 10f);
-            var originalColor = text.color;
+            var originalColor = Color.white;
             text.color = color;
             text.DOColor(originalColor, duration);
         }
