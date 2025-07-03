@@ -17,7 +17,7 @@ namespace Prototype.CardComponents
         public void Initialize(CardInstance instance, string[] args)
         {
             cardInstance = instance;
-            
+            OnInitialize(args);
         }
 
         protected virtual void OnInitialize(string[] args)

@@ -26,32 +26,28 @@ namespace Prototype
         [SerializeField] private RectTransform nextCardsParent;
         [SerializeField] private TextMeshProUGUI roomText;
         [SerializeField] private TextMeshProUGUI healthText;
+        [SerializeField] private Slider healthSlider;
         
-        [SerializeField] private CardVisual equippedToolVisual;
-        [SerializeField] private CardVisual equippedCardVisual;
+        [SerializeField] private EquippedInfo equippedToolVisual;
+        [SerializeField] private EquippedInfo equippedWeaponVisual;
         [SerializeField] private TextMeshProUGUI equippedValueText;
 
         [SerializeField] private Button standardActionButton;
         [SerializeField] private TextMeshProUGUI standardActionText;
 
         [SerializeField] private Button fightActionButton;
-        [SerializeField] private Button dungeonInfoButton;
         
         [SerializeField] private Button runActionButton;
         [SerializeField] private TextMeshProUGUI runActionText;
-
-        [SerializeField] private RectTransform dungeonInfoRect;
-        [SerializeField] private RectTransform infoParent;
         
-        [SerializeField] private Slider dungeonProgress;
         [SerializeField] private GameObject resultScreen;
         [SerializeField] private TextMeshProUGUI resultScreenText;
 
-        [FormerlySerializedAs("cardPrefab")]
+        [SerializeField] private ArenaInfo arenaInfo;
+
         [Header("Prefabs")] 
         [SerializeField] private CardVisual cardVisualPrefab;
         [SerializeField] private CardVisual nextCardVisualPrefab;
-        [SerializeField] private TextMeshProUGUI infoPrefab;
 
         public CardInstance EquippedTool => equippedTool;
         public CardInstance EquippedWeapon => equippedWeapon;
@@ -60,10 +56,9 @@ namespace Prototype
         private List<CardVisual> spawnedCards = new();
         private List<CardVisual> spawnedNextCards = new();
         private List<CardInstance> discarded = new();
-        private List<TextMeshProUGUI> spawnedInfo = new();
+        
         private int health;
         private int roomCount = 0;
-        private int cardInitialCount = 0;
         private int currentRunCooldown = 0;
 
         private CardVisual selectedCardVisual;
@@ -75,15 +70,8 @@ namespace Prototype
             standardActionButton.onClick.AddListener(OnStandardAction);
             fightActionButton.onClick.AddListener(OnFightWithWeaponAction);
             runActionButton.onClick.AddListener(OnRunAction);
-            dungeonInfoButton.onClick.AddListener(ToggleDungeonInfo);
             
             resultScreen.SetActive(false);
-        }
-
-        private void ToggleDungeonInfo()
-        {
-            var active = dungeonInfoRect.gameObject.activeInHierarchy;
-            dungeonInfoRect.gameObject.SetActive(!active);
         }
 
         private void Update()
@@ -94,7 +82,8 @@ namespace Prototype
                 return;
             }
             
-            healthText.text = $" {health}<size=33%>/{maxHealth}";
+            healthText.text = $" {health} / {maxHealth}";
+            healthSlider.value = (float) health / maxHealth;
 
             var hasSelected = selectedCardVisual != null;
             var hasEquippedWeapon = equippedWeapon != null;
@@ -102,7 +91,7 @@ namespace Prototype
             
             standardActionButton.gameObject.SetActive(hasSelected);
             fightActionButton.gameObject.SetActive(hasSelected && hasEquippedWeapon && selectedCardVisual.Type == CardType.Monster );
-            equippedCardVisual.gameObject.SetActive(hasEquippedWeapon);
+            equippedWeaponVisual.gameObject.SetActive(hasEquippedWeapon);
             equippedToolVisual.gameObject.SetActive(hasEquippedTool);
             
             //runActionButton.gameObject.SetActive(roomCount > 1);
@@ -117,10 +106,11 @@ namespace Prototype
         {
             ResetState();
 
-            cardInitialCount = cards.Length;
             var random = cards.OrderBy(_ => Random.value);
             foreach (var card in random)
                 deck.Enqueue(new CardInstance(card));
+            
+            arenaInfo.Initialize(deck);
 
             NextTurn();
         }
@@ -156,9 +146,22 @@ namespace Prototype
 
             if (spawnedCards.Count <= cardLeftToNextTurn) NextRound();
 
-            UpdateInfo();
+            arenaInfo.UpdateInfo(deck, spawnedCards.Select(x => x.Instance), discarded);
 
-            if (deck.Count <= 0 && spawnedCards.Count <= 0) Victory();
+            if (!HasEnemies()) Victory();
+        }
+
+        public bool HasEnemies()
+        {
+            foreach (var card in spawnedCards)
+                if (card.Instance.Data.type == CardType.Monster)
+                    return true;
+            
+            foreach (var card in deck)
+                if (card.Data.type == CardType.Monster)
+                    return true;
+
+            return false;
         }
 
         private void NextRound()
@@ -221,28 +224,6 @@ namespace Prototype
             spawnedNextCards.Clear();
         }
 
-        private void UpdateInfo()
-        {
-            foreach (var info in spawnedInfo)
-                Destroy(info.gameObject);
-            spawnedInfo.Clear();
-            
-            var topText = Instantiate(infoPrefab, infoParent);
-            topText.text = $"In this Dungeon: ";
-            spawnedInfo.Add(topText);
-
-            var ordered = deck.OrderBy(x => x.Data.type).ThenBy(x => x.Data.value);
-            foreach (var card in ordered)
-            {
-                var text = Instantiate(infoPrefab, infoParent);
-                text.text = $"- <size=40%>({card.Data.type})</size> {card.Data.displayName} - {card.Data.value}";
-                spawnedInfo.Add(text);
-            }
-
-            var remaining = (float) (deck.Count + spawnedCards.Count) / cardInitialCount;
-            dungeonProgress.value = 1f - remaining;
-        }
-
         private void OnCardPicked(CardVisual cardVisual)
         {
             if (selectedCardVisual != null) selectedCardVisual.SetSelected(false);
@@ -280,7 +261,7 @@ namespace Prototype
         private void OnEquipToolAction()
         {
             equippedTool = selectedCardVisual.Instance;
-            equippedCardVisual.Display(equippedTool, null);
+            equippedWeaponVisual.Display(equippedTool, null);
             
             ConsumeSelectedCard();
         }
@@ -377,7 +358,7 @@ namespace Prototype
             var color = newValue > equippedWeapon.Data.value ? Color.green : Color.red;
 
             equippedWeapon.SetValue(newValue);
-            equippedCardVisual.Display(equippedWeapon, null);
+            equippedWeaponVisual.Display(equippedWeapon, null);
             ShakeColorAnimateText(equippedValueText, color, 0.3f);
         }
 
@@ -385,7 +366,7 @@ namespace Prototype
         {
             equippedWeapon = selectedCardVisual.Instance;
             
-            equippedCardVisual.Display(equippedWeapon, null);
+            equippedWeaponVisual.Display(equippedWeapon, null);
             
             ShakeColorAnimateText(equippedValueText, Color.green, 0.3f);
 

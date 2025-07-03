@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 using Utilities;
 
 namespace Prototype.CardComponents.Implementations
@@ -14,6 +15,7 @@ namespace Prototype.CardComponents.Implementations
         protected override void OnInitialize(string[] args)
         {
             roundCount = args.GetInt(0, 1);
+            Debug.Log($"ROUND COUNT IS NOW {roundCount}");
         }
 
         public void OnItemUse(ArenaController arena)
@@ -24,6 +26,8 @@ namespace Prototype.CardComponents.Implementations
         public void OnNewRound(ArenaController arena)
         {
             roundCount--;
+            Debug.Log($"ROUND COUNT IS NOW {roundCount}");
+
             if (roundCount > 0)
             {
                 RaiseUpdateEvent();
