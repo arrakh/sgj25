@@ -850,6 +850,7 @@ MonoBehaviour:
   lockedImage: {fileID: 5045687274566459710}
   nameText: {fileID: 3373298803273764510}
   componentController: {fileID: 4328627028400563436}
+  canSelect: 1
 --- !u!1001 &463878540549653428
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -868,7 +869,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 957018698386553012, guid: 480b2b0f7c8bb134d8d5d0fe5fa541d0, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 92.02
       objectReference: {fileID: 0}
     - target: {fileID: 957018698386553012, guid: 480b2b0f7c8bb134d8d5d0fe5fa541d0, type: 3}
       propertyPath: m_SizeDelta.y
@@ -908,7 +909,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6533984906440551768, guid: 480b2b0f7c8bb134d8d5d0fe5fa541d0, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 92.02
       objectReference: {fileID: 0}
     - target: {fileID: 6533984906440551768, guid: 480b2b0f7c8bb134d8d5d0fe5fa541d0, type: 3}
       propertyPath: m_SizeDelta.y
