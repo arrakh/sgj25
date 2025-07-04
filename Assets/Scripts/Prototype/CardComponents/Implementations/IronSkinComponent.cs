@@ -1,14 +1,18 @@
-﻿using Utilities;
+﻿/*
+ *   Copyright (c) 2025 
+ *   All rights reserved.
+ */
+using Assets.SimpleLocalization.Scripts;
+using Utilities;
 
 namespace Prototype.CardComponents.Implementations
 {
     public class IronSkinComponent : CardComponent, IOnDestroyMonsterWithWeapon
     {
         private int damage = 1;
-        public override string DisplayName => $"Iron Skin {damage}";
+        public override string DisplayName => LocalizationManager.Localize("ironskin-title", damage);
 
-        public override string Description =>
-            $"When damaged, will reduce weapon's value by {damage}. Weapon will break when it reaches 0";
+        public override string Description => LocalizationManager.Localize("ironskin-description", damage);
 
         public override string[] Aliases => new[] {"ironskin"};
 

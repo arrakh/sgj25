@@ -1,13 +1,17 @@
-﻿using UnityEngine;
+﻿/*
+ *   Copyright (c) 2025 
+ *   All rights reserved.
+ */
+using Assets.SimpleLocalization.Scripts;
+using UnityEngine;
 
 namespace Prototype.CardComponents.Implementations
 {
     public class FierceComponent : CardComponent, IModifyOverkillDamage
     {
-        public override string DisplayName => "Fierce";
+        public override string DisplayName => LocalizationManager.Localize("fierce-title");
 
-        public override string Description =>
-            "When attacked by a weapon with lower power than its own, double the damage dealt to the player";
+        public override string Description => LocalizationManager.Localize("fierce-description");
 
         public override string[] Aliases => new []{"fierce"};
         

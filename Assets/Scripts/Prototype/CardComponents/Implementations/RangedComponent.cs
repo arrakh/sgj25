@@ -1,5 +1,12 @@
-﻿
+﻿/*
+ *   Copyright (c) 2025 
+ *   All rights reserved.
+ */
+
 using System;
+using Assets.SimpleLocalization.Scripts;
+using Mono.Cecil.Cil;
+using UnityEngine.UIElements;
 using Utilities;
 
 namespace Prototype.CardComponents.Implementations
@@ -10,9 +17,9 @@ namespace Prototype.CardComponents.Implementations
         public Action<CardComponent> OnUpdateVisual { get; }
 
         private int durability = 1;
-        
-        public override string DisplayName => $"Ranged {durability}";
-        public override string Description => $"Doesn't get weaker when fighting weaker enemies. Breaks in {durability} shots";
+
+        public override string DisplayName => LocalizationManager.Localize("ranged-title", durability);
+        public override string Description => LocalizationManager.Localize("ranged-description", durability);
         public override string[] Aliases => new[] {"ranged", "range"};
 
         protected override void OnInitialize(string[] args)
