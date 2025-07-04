@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 757fa3dd1d2f452f8ec85c0ffac4f954, type: 3}
+  m_Name: CardBg
+  m_EditorClassIdentifier: 
+  sprites:
+  - id: card-bg-red
+    sprite: {fileID: -200902886474791336, guid: d8f5a45e69fb493429002d35d734ea08, type: 3}
+  - id: card-bg-yellow
+    sprite: {fileID: -3428627291121632019, guid: aa2b5ab8f1715f548b6f46b7dabea719, type: 3}
+  - id: card-bg-purple
+    sprite: {fileID: -228330675443075906, guid: 209ab63742a03774dbbcb61a9f5ea081, type: 3}
+  - id: card-bg-blue
+    sprite: {fileID: 1730750698116848646, guid: 0d356551f651d194eba9b47134ecf2aa, type: 3}

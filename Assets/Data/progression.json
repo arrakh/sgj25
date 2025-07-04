@@ -1,2 +1,10 @@
-{
-}
+[
+  {
+    "minHype": 55,
+    "targetScore": 999,
+    "cardRewards": 
+    [
+      "dagger-1"  
+    ]
+  }
+]

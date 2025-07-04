@@ -1,95 +1,106 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 using DG.Tweening;
+using UnityEngine.UI;
+using UnityEngine.UI.Extensions;
+using Button = UnityEngine.UI.Button;
 
 namespace Prototype
 {
-    public class ResultScreenManager : MonoBehaviour
+    public class ResultScreenController : MonoBehaviour
     {
         [Header("UI References")]
         public TextMeshProUGUI resultText;
         public TextMeshProUGUI scoreText;
+        public TextMeshProUGUI targetScoreText;
         public Transform defeatedContainer;
         public Transform remainingContainer;
         public GameObject resultCardPrefab;
+        public Button nextButton;
+        public ScrollRect defeatedView, remainingView;
 
-        [Header("Effect References")]
-        public RectTransform panelToShake;      // assign panel utama result screen
+        [Header("Effect References")]    // assign panel utama result screen
         public GameObject confettiPrefab;       // assign particle system confetti
 
         [Header("Animation Settings")]
         public float delayBetweenCards = 0.3f;
 
+        public int Score => score;
+
         private int score = 0;
 
-        public void ShowResult(bool isAlive, List<CardData> defeated, List<CardData> remaining)
+        private bool done = false;
+        
+        private void Awake()
         {
-            resultText.text = isAlive ? "You lived" : "You died";
-            score = 0;
-            scoreText.text = "Score: 0";
-
-            StartCoroutine(PlayResult(defeated, remaining));
+            nextButton.onClick.AddListener(() => done = true);
         }
 
-        private IEnumerator PlayResult(List<CardData> defeated, List<CardData> remaining)
+        public IEnumerator PlayResult(GameResult gameResult, int targetScore)
         {
-            foreach (var data in defeated)
-            {
-                yield return ShowCardAndAddScore(data, defeatedContainer);
-            }
+            nextButton.gameObject.SetActive(false);
 
-            foreach (var data in remaining)
-            {
-                yield return ShowCardAndAddScore(data, remainingContainer);
-            }
+            done = false;
+            resultText.text = gameResult.win ? "You lost..." : "You won!";
+            score = 0;
+            scoreText.text = "0";
+            targetScoreText.text = targetScore.ToString();
+            
+            foreach (var data in gameResult.enemyDefeated)
+                yield return ShowCardAndAddScore(gameResult.win, data.Data, defeatedContainer, defeatedView);
+            
+            foreach (var data in gameResult.itemsLeft)
+                yield return ShowCardAndAddScore(gameResult.win,data.Data , remainingContainer, remainingView);
 
             // 🎉 Confetti di akhir
             SpawnConfetti();
+
+            nextButton.gameObject.SetActive(true);
+
+            yield return new WaitUntil(() => done);
         }
 
-        private IEnumerator ShowCardAndAddScore(CardData data, Transform container)
+        private IEnumerator ShowCardAndAddScore(bool win, CardData data, Transform container, ScrollRect rect)
         {
-            GameObject cardObj = Instantiate(resultCardPrefab, container);
-            var display = cardObj.GetComponent<ResultCardDisplay>();
-            display.Setup(data);
-
-            cardObj.transform.localScale = Vector3.zero;
-            yield return cardObj.transform
-                .DOScale(Vector3.one, 0.25f)
-                .SetEase(Ease.OutBack)
-                .WaitForCompletion();
-
+            var cardScore = !win ? 0 : Mathf.Abs(data.cost) * 5;
+            
             // 🔢 Score naik animasi
             int startValue = score;
-            int endValue = score + data.value;
+            int endValue = score + cardScore;
             score = endValue;
+            
+            GameObject cardObj = Instantiate(resultCardPrefab, container);
+            var display = cardObj.GetComponent<ResultCardDisplay>();
+            display.Setup(data, cardScore);
+
+            cardObj.transform.localScale = Vector3.zero;
+            cardObj.transform
+                .DOScale(Vector3.one, 0.25f)
+                .SetEase(Ease.OutBack);
 
             // 🔢 Animasi naik skor + scale text
             DOTween.To(() => startValue, x =>
             {
                 startValue = x;
-                scoreText.text = $"Score: {startValue}";
-            }, endValue, 0.3f).OnStart(() =>
+                scoreText.text = startValue.ToString();
+            }, endValue, delayBetweenCards).OnStart(() =>
             {
                 // Scale up
-                scoreText.rectTransform.DOScale(1.3f, 0.15f)
+                scoreText.rectTransform.DOScale(1.3f, 0.12f)
                     .SetEase(Ease.OutBack)
                     .OnComplete(() =>
                     {
                         // Scale back to normal
-                        scoreText.rectTransform.DOScale(1f, 0.15f)
+                        scoreText.rectTransform.DOScale(1f, 0.33f)
                             .SetEase(Ease.OutBack);
                     });
             });
-            //  Shake panel
-            if (panelToShake != null)
-            {
-                panelToShake.DOShakeAnchorPos(0.3f, 15f, 10, 90);
-            }
-
+            
+            rect.ScrollToBottom();
+            
             yield return new WaitForSeconds(delayBetweenCards);
         }
 

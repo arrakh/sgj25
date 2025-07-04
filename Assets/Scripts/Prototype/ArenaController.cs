@@ -140,7 +140,7 @@ namespace Prototype
         {
             if (health <= 0)
             {
-                Death();
+                ConcludeGame(false);
                 return;
             }
 
@@ -148,7 +148,7 @@ namespace Prototype
 
             arenaInfo.UpdateInfo(deck, spawnedCards.Select(x => x.Instance), discarded);
 
-            if (!HasEnemies()) Victory();
+            if (!HasEnemies()) ConcludeGame(true);
         }
 
         public bool HasEnemies()
@@ -434,33 +434,23 @@ namespace Prototype
 
         private void ConcludeGame(bool win)
         {
-            /*var enemyDefeated = discarded.Select(x => x.Data.type == CardType.Monster);
+            var enemyDefeated = discarded.Where(x => x.Data.type == CardType.Monster).ToList();
 
-            List<CardInstance> itemsLeft = new();
+            var itemsLeft = deck.Where(CardFilter).ToList();
+            
+            if (spawnedCards.Count > 0)
+                itemsLeft.AddRange(spawnedCards.Select(x => x.Instance).Where(CardFilter));
 
-            foreach (var card in deck)
+            gameResult = new GameResult(win, enemyDefeated, itemsLeft);
+            isGameRunning = false;
+        }
+
+        private bool CardFilter(CardInstance instance)
+            => instance.Data.type switch
             {
-                switch (card.Data.type)
-                {
-                    case CardType.Weapon:
-                    case CardType.Item:
-                        itemsLeft.Add(card);
-                        break;
-                }
-            }
-
-            gameResult = new GameResult(win, )*/
-        }
-
-        private void Death()
-        {
-            
-        }
-
-        private void Victory()
-        {
-            
-        }
+                CardType.Monster => false,
+                _ => true
+            };
 
         private void ShakeColorAnimateText(TextMeshProUGUI text, Color color, float duration)
         {

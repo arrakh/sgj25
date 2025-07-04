@@ -36,6 +36,7 @@ namespace Prototype
 
         private void OnDestroy()
         {
+            if (cardInstance == null) return;
             foreach (var component in cardInstance.Components)
             {
                 component.OnUpdated -= OnComponentUpdated;
