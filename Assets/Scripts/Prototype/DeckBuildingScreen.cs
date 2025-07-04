@@ -1,4 +1,8 @@
-﻿using System;
+﻿/*
+ *   Copyright (c) 2025 
+ *   All rights reserved.
+ */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
@@ -200,7 +204,7 @@ namespace Prototype
             hypeValue.text = $"{hype}/{hypeMin}";
             var alpha = (float) hype / hypeMin;
             var color = hypeGradient.Evaluate(Mathf.Clamp01((alpha - 1f) / 3f));
-            hypeValue.color = hype < hypeMin ? Color.white : color;
+            hypeValue.color = hype < hypeMin ? Color.black : color;
 
             hypeSlider.value = Mathf.Clamp01(alpha);
             hypeSliderFill.color = color;
