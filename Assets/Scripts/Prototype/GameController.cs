@@ -96,6 +96,8 @@ namespace Prototype
         {
             resultScreen.gameObject.SetActive(false);
             rewardScreen.gameObject.SetActive(false);
+            
+            Debug.Log($"Start of Game Loop! Skip Deck Build? {skipDeckBuilding}");
 
             if (!skipDeckBuilding)
             {

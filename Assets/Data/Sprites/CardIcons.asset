@@ -34,9 +34,9 @@ MonoBehaviour:
   - id: round-shield
     sprite: {fileID: 21300000, guid: 09e765693249b624c941f1925284fe71, type: 3}
   - id: switch-order
-    sprite: {fileID: 731806605160617493, guid: bedfbf3ef9816514e9bb78d23f7b8f70, type: 3}
+    sprite: {fileID: 21300000, guid: 86617fd3627fdf04e95b79dfcad4f8c0, type: 3}
   - id: cheat-sheet
-    sprite: {fileID: 731806605160617493, guid: bedfbf3ef9816514e9bb78d23f7b8f70, type: 3}
+    sprite: {fileID: 21300000, guid: 3ce01933656516e4aa93f0666463c372, type: 3}
   - id: gladiator
     sprite: {fileID: -8779681549725420321, guid: 2c646db05991abc43931ebc9aeb03f96, type: 3}
   - id: stone-golem

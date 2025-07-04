@@ -1,8 +1,4 @@
-﻿/*
- *   Copyright (c) 2025 
- *   All rights reserved.
- */
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
@@ -53,6 +49,10 @@ namespace Prototype
 
         public void Initialize(int minimumHype, bool restrictHype)
         {
+            CompleteBuilding = false;
+            
+            ResetState();
+            
             hypeMin = minimumHype;
             shouldRestrictHype = restrictHype;
 
@@ -80,6 +80,21 @@ namespace Prototype
 
             RecalculateHype();
             UpdateCountLabels();
+        }
+
+        private void ResetState()
+        {
+            foreach (var vis in deckVisByInst.Values)
+                ReturnDeckVisual(vis);
+            foreach (var vis in libVisById.Values)
+                ReturnLibVisual(vis);
+
+            deckVisByInst.Clear();
+            libVisById.Clear();
+            currentDeck.Clear();
+            currentLibrary.Clear();
+
+            typeFilter = CardType.None;
         }
 
         private DeckCardVisual GetDeckVisual()
@@ -199,7 +214,14 @@ namespace Prototype
 
         private void RecalculateHype()
         {
-            hype = currentDeck.Sum(c => c.Data.cost);
+            hype = 0;
+
+            foreach (var card in currentDeck)
+            {
+                hype += card.Data.cost;
+                Debug.Log($"{card.Data.displayName} cost is {card.Data.cost}");
+            }   
+            Debug.Log($"HYPE IS CURRENTLY {hype}, CALCULATED FROM {currentDeck.Count} CARDS");
 
             hypeValue.text = $"{hype}/{hypeMin}";
             var alpha = (float) hype / hypeMin;
