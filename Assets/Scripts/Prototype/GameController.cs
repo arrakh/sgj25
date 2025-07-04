@@ -9,6 +9,7 @@ namespace Prototype
 {
     public class GameController : MonoBehaviour
     {
+        private const string STAGE = "stage";
         private static bool _staticInitialized = false;
         
         [Header("Scene")]
@@ -20,6 +21,8 @@ namespace Prototype
         [Header("Data")]
         [SerializeField] private SpriteDatabase[] spriteDatabases;
 
+        private int stage, lastStage;
+        
         private IEnumerator Start()
         {
             if (!_staticInitialized)
@@ -37,23 +40,54 @@ namespace Prototype
             
             //yield return TestResultScreen();
             //yield break;
+            
+            stage = PlayerPrefs.GetInt(STAGE, 0);
+            lastStage = gameDb.ProgressionData.Length - 1;
 
-            deckBuildingScreen.Initialize(55);
+            if (stage < lastStage) yield return CampaignPlay();
+
+            yield return FreePlay();
+        }
+
+        private IEnumerator FreePlay()
+        {
+            var data = gameDb.ProgressionData.Last();
+            while (true) yield return GameLoop(data, true);
+        }
+
+        private IEnumerator CampaignPlay()
+        {
+            var progression = gameDb.ProgressionData;
+
+            for (int i = stage; i < progression.Length; i++)
+            {
+                var data = progression[i];
+                yield return GameLoop(data, false);
+                
+                var score = resultScreen.Score;
+                if (score < data.targetScore) continue;
+
+                //show result screen
+                stage++;
+                PlayerPrefs.SetInt(STAGE, stage);
+            }
+        }
+
+        private IEnumerator GameLoop(ProgressionEntry progression, bool isFreePlay)
+        {
+            deckBuildingScreen.Initialize(progression.minHype, !isFreePlay);
             deckBuildingScreen.gameObject.SetActive(true);
             resultScreen.gameObject.SetActive(false);
-
+                
             yield return new WaitUntil(() => deckBuildingScreen.CompleteBuilding);
             var deck = deckBuildingScreen.Deck;
-            
             deckBuildingScreen.gameObject.SetActive(false);
             
             arenaController.StartArena(deck);
             yield return new WaitUntil(() => !arenaController.IsGameRunning);
             
             resultScreen.gameObject.SetActive(true);
-            yield return resultScreen.PlayResult(arenaController.GameResult, 999);
-            
-            Debug.Log("DONE");
+            yield return resultScreen.PlayResult(arenaController.GameResult, progression.targetScore);
         }
 
         IEnumerator TestResultScreen()
