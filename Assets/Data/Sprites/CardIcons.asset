@@ -14,25 +14,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprites:
   - id: dagger
-    sprite: {fileID: 1098179606456428539, guid: fccdbde97f1909b4db6921a52c369545, type: 3}
+    sprite: {fileID: 21300000, guid: 713e9a6b4f1bad4498e72e13c58370bd, type: 3}
   - id: sword
-    sprite: {fileID: 1098179606456428539, guid: fccdbde97f1909b4db6921a52c369545, type: 3}
+    sprite: {fileID: 21300000, guid: fd361a2de1415e847940942dec7645ef, type: 3}
   - id: spear
-    sprite: {fileID: 1098179606456428539, guid: fccdbde97f1909b4db6921a52c369545, type: 3}
+    sprite: {fileID: 21300000, guid: 4148fb8330aabda47a46dd1d78027d20, type: 3}
   - id: shortbow
-    sprite: {fileID: 1098179606456428539, guid: fccdbde97f1909b4db6921a52c369545, type: 3}
+    sprite: {fileID: 21300000, guid: dfaeb4f95b7693d4e987ef4fe0e2289d, type: 3}
   - id: recurved-bow
-    sprite: {fileID: 1098179606456428539, guid: fccdbde97f1909b4db6921a52c369545, type: 3}
+    sprite: {fileID: 21300000, guid: 9d55da0eb9b05c841b805abb892f74bd, type: 3}
   - id: crossbow
-    sprite: {fileID: 1098179606456428539, guid: fccdbde97f1909b4db6921a52c369545, type: 3}
+    sprite: {fileID: 21300000, guid: 065770a9a512ae94385a6d56a7da5e03, type: 3}
   - id: soul-blade
-    sprite: {fileID: 1098179606456428539, guid: fccdbde97f1909b4db6921a52c369545, type: 3}
+    sprite: {fileID: 21300000, guid: c9d8c96799fd9604db74c7ca329a54f8, type: 3}
   - id: health-potion
-    sprite: {fileID: 731806605160617493, guid: bedfbf3ef9816514e9bb78d23f7b8f70, type: 3}
+    sprite: {fileID: 21300000, guid: 51bdf5ad5fc72114f917722004c29174, type: 3}
   - id: sharpening-kit
-    sprite: {fileID: 731806605160617493, guid: bedfbf3ef9816514e9bb78d23f7b8f70, type: 3}
+    sprite: {fileID: 21300000, guid: e05f9f358254895428130f0dd098cada, type: 3}
   - id: round-shield
-    sprite: {fileID: 731806605160617493, guid: bedfbf3ef9816514e9bb78d23f7b8f70, type: 3}
+    sprite: {fileID: 21300000, guid: 09e765693249b624c941f1925284fe71, type: 3}
   - id: switch-order
     sprite: {fileID: 731806605160617493, guid: bedfbf3ef9816514e9bb78d23f7b8f70, type: 3}
   - id: cheat-sheet

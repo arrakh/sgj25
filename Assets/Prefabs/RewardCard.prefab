@@ -118,11 +118,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1219621445101840200, guid: 3d643b3d34b2a15488671201ab11c6f8, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 200
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 1219621445101840200, guid: 3d643b3d34b2a15488671201ab11c6f8, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 200
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 1219621445101840200, guid: 3d643b3d34b2a15488671201ab11c6f8, type: 3}
       propertyPath: m_LocalPosition.x
@@ -190,11 +190,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3373298803273764510, guid: 3d643b3d34b2a15488671201ab11c6f8, type: 3}
       propertyPath: m_fontSize
-      value: 37.55
+      value: 48
       objectReference: {fileID: 0}
     - target: {fileID: 3607058456278806420, guid: 3d643b3d34b2a15488671201ab11c6f8, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 8
+      value: -109.1
       objectReference: {fileID: 0}
     - target: {fileID: 3731542612150450304, guid: 3d643b3d34b2a15488671201ab11c6f8, type: 3}
       propertyPath: m_AnchorMax.y
@@ -296,17 +296,21 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -17.88
       objectReference: {fileID: 0}
+    - target: {fileID: 5319557244871862630, guid: 3d643b3d34b2a15488671201ab11c6f8, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -220
+      objectReference: {fileID: 0}
     - target: {fileID: 5669737255124665110, guid: 3d643b3d34b2a15488671201ab11c6f8, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5936649755886526402, guid: 3d643b3d34b2a15488671201ab11c6f8, type: 3}
       propertyPath: m_SizeDelta.x
-      value: -48
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5936649755886526402, guid: 3d643b3d34b2a15488671201ab11c6f8, type: 3}
       propertyPath: m_SizeDelta.y
-      value: -48
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5936649755886526402, guid: 3d643b3d34b2a15488671201ab11c6f8, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -314,7 +318,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5936649755886526402, guid: 3d643b3d34b2a15488671201ab11c6f8, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 12
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6153315913343406912, guid: 3d643b3d34b2a15488671201ab11c6f8, type: 3}
       propertyPath: m_fontSize
@@ -494,7 +498,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8541070933285381615, guid: 3d643b3d34b2a15488671201ab11c6f8, type: 3}
       propertyPath: m_Name
-      value: SmallCard
+      value: RewardCard
       objectReference: {fileID: 0}
     - target: {fileID: 8789718622379255712, guid: 3d643b3d34b2a15488671201ab11c6f8, type: 3}
       propertyPath: m_IsActive

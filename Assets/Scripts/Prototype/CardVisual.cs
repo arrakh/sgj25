@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Utilities;
 
 namespace Prototype
 {
@@ -13,6 +14,8 @@ namespace Prototype
     {
         [SerializeField] private Button cardButton;
         [SerializeField] private Image icon;
+        [SerializeField] private Image nameplate;
+        [SerializeField] private Image background;
         [SerializeField] private TextMeshProUGUI valueText;
         [SerializeField] private Image highlight, lockedImage;
         [SerializeField] private TextMeshProUGUI nameText;
@@ -50,6 +53,10 @@ namespace Prototype
 
             valueText.text = Value.ToString();
             icon.sprite = SpriteDatabase.Get(instance.Data.spriteId);
+
+            var type = instance.Data.type;
+            background.sprite = type.GetBackground();
+            nameplate.sprite = type.GetBackground();
             
             OnDisplay(instance);
         }

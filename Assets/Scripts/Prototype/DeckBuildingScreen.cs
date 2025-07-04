@@ -10,10 +10,9 @@ namespace Prototype
 {
     public class DeckBuildingScreen : MonoBehaviour
     {
-        private const string SAVED_DECK = "saved-deck";
-        private const string SAVED_LIBRARY = "saved-library";
-
-        [Header("Scene")] [SerializeField] private GameDatabase gameDb;
+        [Header("Scene")] 
+        [SerializeField] private GameDatabase gameDb;
+        [SerializeField] private GameSaveController gameSave;
         [SerializeField] private RectTransform deckCardParent;
         [SerializeField] private RectTransform libraryCardParent;
         [SerializeField] private Slider hypeSlider;
@@ -53,10 +52,10 @@ namespace Prototype
             hypeMin = minimumHype;
             shouldRestrictHype = restrictHype;
 
-            foreach (var entry in GetSavedLibrary())
+            foreach (var entry in gameSave.LoadLibrary())
                 currentLibrary.Add(entry.id, new LibraryEntry(entry, gameDb));
 
-            foreach (var cardId in GetSavedDeck())
+            foreach (var cardId in gameSave.LoadDeck())
                 currentDeck.Add(new CardInstance(gameDb.GetCard(cardId)));
 
             foreach (var (id, entry) in currentLibrary)
@@ -242,35 +241,15 @@ namespace Prototype
         private void OnFightButton()
         {
             if (shouldRestrictHype && hype < hypeMin) return;
+
+            var library = currentLibrary.Values.Select(x => new LibraryData(x.instance.Data.id, x.Amount)).ToArray();
+            var deck = currentDeck.Select(x => x.Data.id).ToArray();
+            
+            gameSave.SaveLibrary(library);
+            gameSave.SaveDeck(deck);
+            
             CompleteBuilding = true;
         }
-
-        #region MOVE TO GAME SAVE
-
-        private LibraryData[] GetSavedLibrary()
-        {
-            if (!PlayerPrefs.HasKey(SAVED_LIBRARY))
-                return DEBUG_Library();
-
-            var json = PlayerPrefs.GetString(SAVED_LIBRARY);
-            return JsonConvert.DeserializeObject<LibraryData[]>(json);
-        }
-
-        private LibraryData[] DEBUG_Library()
-        {
-            return gameDb.AllCards.Select(x => new LibraryData {id = x.id, amount = 1}).ToArray();
-        }
-
-        private string[] GetSavedDeck()
-        {
-            if (!PlayerPrefs.HasKey(SAVED_DECK))
-                return gameDb.StartingDeck;
-
-            var json = PlayerPrefs.GetString(SAVED_DECK);
-            return JsonConvert.DeserializeObject<string[]>(json);
-        }
-
-        #endregion
     }
 
     internal static class PoolExtensions

@@ -432,20 +432,38 @@ namespace Prototype
             NextTurn();
         }
 
+        [ContextMenu("AutoWin")]
+        private void AutoWin()
+        {
+            var list = deck.ToList();
+            list.AddRange(spawnedCards.Select(x => x.Instance));
+            
+            ClearCards();
+            deck.Clear();
+
+            foreach (var card in list)
+            {
+                if (IsNotMonster(card)) deck.Enqueue(card);
+                else discarded.Add(card);
+            }
+            
+            ConcludeGame(true);
+        }
+
         private void ConcludeGame(bool win)
         {
             var enemyDefeated = discarded.Where(x => x.Data.type == CardType.Monster).ToList();
 
-            var itemsLeft = deck.Where(CardFilter).ToList();
+            var itemsLeft = deck.Where(IsNotMonster).ToList();
             
             if (spawnedCards.Count > 0)
-                itemsLeft.AddRange(spawnedCards.Select(x => x.Instance).Where(CardFilter));
+                itemsLeft.AddRange(spawnedCards.Select(x => x.Instance).Where(IsNotMonster));
 
             gameResult = new GameResult(win, enemyDefeated, itemsLeft);
             isGameRunning = false;
         }
 
-        private bool CardFilter(CardInstance instance)
+        private bool IsNotMonster(CardInstance instance)
             => instance.Data.type switch
             {
                 CardType.Monster => false,

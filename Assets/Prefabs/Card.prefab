@@ -921,6 +921,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardButton: {fileID: 6032152624593255363}
   icon: {fileID: 7990792983201383792}
+  nameplate: {fileID: 2670348346982992946}
+  background: {fileID: 3417455135333909035}
   valueText: {fileID: 6153315913343406912}
   highlight: {fileID: 6916136607407057426}
   lockedImage: {fileID: 5045687274566459710}
@@ -1045,7 +1047,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9190542369025336340, guid: 480b2b0f7c8bb134d8d5d0fe5fa541d0, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
