@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Assets.SimpleLocalization.Scripts;
 using UnityEngine;
 using TMPro;
 using DG.Tweening;
@@ -44,7 +45,8 @@ namespace Prototype
             nextButton.gameObject.SetActive(false);
 
             done = false;
-            resultText.text = gameResult.win ? "You lost..." : "You won!";
+            var key = gameResult.win ? "you-lost" : "you-win";
+            resultText.text = LocalizationManager.Localize(key);
             score = 0;
             scoreText.text = "0";
             targetScoreText.text = targetScore.ToString();
