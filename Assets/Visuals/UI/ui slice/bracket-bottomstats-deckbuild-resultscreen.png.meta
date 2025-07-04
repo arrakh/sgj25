@@ -173,7 +173,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      bracket-bottomstats-deckbuild-resultscreen_0: -2310509091963791207
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

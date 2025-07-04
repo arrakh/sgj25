@@ -173,7 +173,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      orange-error-icon-0_0: -9126511279513025554
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

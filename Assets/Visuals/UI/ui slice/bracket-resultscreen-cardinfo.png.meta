@@ -173,7 +173,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      bracket-resultscreen-cardinfo_0: -5159301171124030088
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

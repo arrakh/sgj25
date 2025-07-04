@@ -139,15 +139,15 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: bracket-deckbuild-arena_0
+      name: bracket
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 1086
-        height: 665
+        x: 2
+        y: 626
+        width: 216
+        height: 39
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -160,11 +160,33 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: bracket-deckbuild-arena_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 1086
+        height: 624
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9d5251cce4d474dd0b81186c51dd7827
+      internalID: 1947703270
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 480486235329c4655be395066f6d4d95
     internalID: 0
     vertices: []
     indices: 
@@ -173,7 +195,9 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      bracket: 8523927820942498125
+      bracket-deckbuild-arena_0: 1947703270
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
