@@ -35,7 +35,8 @@ namespace Prototype
             if (!gameDb.TryInitialize())
                 throw new Exception("CANNOT INITIALIZE GAME DB, CHECK WHATS WRONG WITH DATA");
             
-            //DEBUG TestResultScreen();
+            //yield return TestResultScreen();
+            //yield break;
 
             deckBuildingScreen.Initialize(55);
             deckBuildingScreen.gameObject.SetActive(true);
@@ -55,7 +56,7 @@ namespace Prototype
             Debug.Log("DONE");
         }
 
-        void TestResultScreen()
+        IEnumerator TestResultScreen()
         {
             resultScreen.gameObject.SetActive(true);
             var cards = gameDb.AllCards.Select(x => new CardInstance(x));
@@ -65,7 +66,7 @@ namespace Prototype
                 else remaining.Add(card);
 
             var result = new GameResult(true, defeated, remaining);
-            resultScreen.PlayResult(result, 999);
+            yield return resultScreen.PlayResult(result, 999);
         }
     }
 }
