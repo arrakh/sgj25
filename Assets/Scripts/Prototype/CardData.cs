@@ -1,4 +1,8 @@
-﻿using System;
+﻿/*
+ *   Copyright (c) 2025 
+ *   All rights reserved.
+ */
+using System;
 using Newtonsoft.Json;
 
 namespace Prototype
