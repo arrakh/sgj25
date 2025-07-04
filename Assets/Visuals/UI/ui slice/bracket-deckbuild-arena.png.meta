@@ -173,7 +173,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      bracket-deckbuild-arena_0: 8523927820942498125
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

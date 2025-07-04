@@ -173,7 +173,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      tab-deckbuild-selected-all_0: 4962559392592806498
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

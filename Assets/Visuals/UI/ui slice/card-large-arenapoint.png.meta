@@ -173,7 +173,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      card-large-arenapoint_0: 6860578963692474417
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -173,7 +173,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      bg-maingameplay-desaturated_0: -3303800430354066738
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

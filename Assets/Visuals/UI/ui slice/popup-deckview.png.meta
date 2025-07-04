@@ -173,7 +173,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      popup-deckview_0: 4212062380920649907
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

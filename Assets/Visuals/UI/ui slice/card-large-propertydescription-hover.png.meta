@@ -173,7 +173,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      card-large-propertydescription-hover_0: -1959587959445189608
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

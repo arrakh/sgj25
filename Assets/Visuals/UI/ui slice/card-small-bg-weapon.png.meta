@@ -173,7 +173,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      card-small-bg-weapon_0: 8785743889869491323
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

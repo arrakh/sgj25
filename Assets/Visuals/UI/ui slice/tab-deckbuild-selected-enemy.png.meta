@@ -173,7 +173,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      tab-deckbuild-selected-enemy_0: 63989676433466651
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -173,7 +173,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      parchment-title-deckbuild-resultscreen_0: -2439151807412377040
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -173,7 +173,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      language-indonesian_0: -2939041425758840220
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

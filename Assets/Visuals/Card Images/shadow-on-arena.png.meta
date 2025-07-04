@@ -173,7 +173,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      shadow-on-arena_0: 3557627968398949659
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
