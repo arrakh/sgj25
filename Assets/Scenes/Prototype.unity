@@ -338,7 +338,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 842099386}
   m_HandleRect: {fileID: 842099385}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -2110,7 +2110,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -0.000018047886}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &300236356
@@ -10700,6 +10700,7 @@ GameObject:
   - component: {fileID: 1514460124}
   - component: {fileID: 1514460126}
   - component: {fileID: 1514460125}
+  - component: {fileID: 1514460127}
   m_Layer: 5
   m_Name: Defeated
   m_TagString: Untagged
@@ -10827,6 +10828,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1514460123}
   m_CullTransparentMesh: 1
+--- !u!114 &1514460127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1514460123}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c45928eda0d4f418d3f38c54da4ee4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  localizationKey: defeated-enemies
 --- !u!1 &1569003364
 GameObject:
   m_ObjectHideFlags: 0
@@ -11556,6 +11570,7 @@ GameObject:
   - component: {fileID: 1719232050}
   - component: {fileID: 1719232052}
   - component: {fileID: 1719232051}
+  - component: {fileID: 1719232053}
   m_Layer: 5
   m_Name: Remaining
   m_TagString: Untagged
@@ -11683,6 +11698,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1719232049}
   m_CullTransparentMesh: 1
+--- !u!114 &1719232053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1719232049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c45928eda0d4f418d3f38c54da4ee4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  localizationKey: left-in-arena
 --- !u!1 &1737187190
 GameObject:
   m_ObjectHideFlags: 0

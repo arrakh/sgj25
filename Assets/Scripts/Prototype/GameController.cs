@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using Assets.SimpleLocalization.Scripts;
 using UnityEngine;
 
 namespace Prototype
@@ -23,6 +24,8 @@ namespace Prototype
             {
                 foreach (var db in spriteDatabases)
                     db.Initialize();
+                
+                LocalizationManager.Read();
 
                 _staticInitialized = true;
             }
