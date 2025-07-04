@@ -13,6 +13,8 @@ namespace Prototype
 {
     public class ResultScreenController : MonoBehaviour
     {
+        private const int SCORE_COST_MULT = 50;
+        
         [Header("UI References")]
         public TextMeshProUGUI resultText;
         public TextMeshProUGUI scoreText;
@@ -67,7 +69,7 @@ namespace Prototype
 
         private IEnumerator ShowCardAndAddScore(bool win, CardData data, Transform container, ScrollRect rect)
         {
-            var cardScore = !win ? 0 : Mathf.Abs(data.cost) * 5;
+            var cardScore = !win ? 0 : Mathf.Abs(data.cost) * SCORE_COST_MULT;
             
             // 🔢 Score naik animasi
             int startValue = score;

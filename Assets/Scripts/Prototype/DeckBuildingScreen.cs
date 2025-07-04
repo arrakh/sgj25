@@ -4,55 +4,54 @@ using System.Linq;
 using Newtonsoft.Json;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Prototype
 {
     public class DeckBuildingScreen : MonoBehaviour
     {
-        private const string SAVED_DECK    = "saved-deck";
+        private const string SAVED_DECK = "saved-deck";
         private const string SAVED_LIBRARY = "saved-library";
 
-        [Header("Scene")]
-        [SerializeField] private GameDatabase     gameDb;
-        [SerializeField] private RectTransform    deckCardParent;
-        [SerializeField] private RectTransform    libraryCardParent;
-        [SerializeField] private Slider           hypeSlider;
-        [SerializeField] private Image            hypeSliderFill;
-        [SerializeField] private TextMeshProUGUI  hypeLabel;
-        [SerializeField] private TextMeshProUGUI  hypeValue;
-        [SerializeField] private Button           fightButton;
-        [SerializeField] private Button           clearButton;
-        [SerializeField] private TextMeshProUGUI  deckLabel;
-        [SerializeField] private TextMeshProUGUI  libraryLabel;
+        [Header("Scene")] [SerializeField] private GameDatabase gameDb;
+        [SerializeField] private RectTransform deckCardParent;
+        [SerializeField] private RectTransform libraryCardParent;
+        [SerializeField] private Slider hypeSlider;
+        [SerializeField] private Image hypeSliderFill;
+        [SerializeField] private TextMeshProUGUI hypeLabel;
+        [SerializeField] private TextMeshProUGUI hypeValue;
+        [SerializeField] private Button fightButton;
+        [SerializeField] private Button clearButton;
+        [SerializeField] private TextMeshProUGUI deckLabel;
+        [SerializeField] private TextMeshProUGUI libraryLabel;
 
-        [Header("Prefabs")]
-        [SerializeField] private DeckCardVisual    deckCardVisualPrefab;
+        [Header("Prefabs")] [SerializeField] private DeckCardVisual deckCardVisualPrefab;
         [SerializeField] private LibraryCardVisual libraryCardVisualPrefab;
 
-        [Header("Data")]
-        [SerializeField] private Gradient hypeGradient;
+        [Header("Data")] [SerializeField] private Gradient hypeGradient;
 
-        public bool       CompleteBuilding { get; private set; }
-        public CardData[] Deck            => currentDeck.Select(i => i.Data).ToArray();
+        public bool CompleteBuilding { get; private set; }
+        public CardData[] Deck => currentDeck.Select(i => i.Data).ToArray();
 
-        private readonly List<CardInstance>                currentDeck   = new();
-        private readonly Dictionary<string, LibraryEntry>  currentLibrary = new();
+        private readonly List<CardInstance> currentDeck = new();
+        private readonly Dictionary<string, LibraryEntry> currentLibrary = new();
 
         private readonly Dictionary<CardInstance, DeckCardVisual> deckVisByInst = new();
-        private readonly Dictionary<string, LibraryCardVisual>    libVisById   = new();
+        private readonly Dictionary<string, LibraryCardVisual> libVisById = new();
 
-        private readonly Stack<DeckCardVisual>    deckPool = new();
-        private readonly Stack<LibraryCardVisual> libPool  = new();
+        private readonly Stack<DeckCardVisual> deckPool = new();
+        private readonly Stack<LibraryCardVisual> libPool = new();
 
         private CardType typeFilter = CardType.None;
-        private int      hype;
-        private int      hypeMin;
+        private int hype;
+        private int hypeMin;
 
-        public void Initialize(int minimumHype)
+        private bool shouldRestrictHype;
+
+        public void Initialize(int minimumHype, bool restrictHype)
         {
             hypeMin = minimumHype;
+            shouldRestrictHype = restrictHype;
 
             foreach (var entry in GetSavedLibrary())
                 currentLibrary.Add(entry.id, new LibraryEntry(entry, gameDb));
@@ -81,9 +80,11 @@ namespace Prototype
         }
 
         private DeckCardVisual GetDeckVisual()
-            => deckPool.Count > 0
+        {
+            return deckPool.Count > 0
                 ? deckPool.Pop().Enable(deckCardParent)
                 : Instantiate(deckCardVisualPrefab, deckCardParent);
+        }
 
         private void ReturnDeckVisual(DeckCardVisual vis)
         {
@@ -92,9 +93,11 @@ namespace Prototype
         }
 
         private LibraryCardVisual GetLibVisual()
-            => libPool.Count > 0
+        {
+            return libPool.Count > 0
                 ? libPool.Pop().Enable(libraryCardParent)
                 : Instantiate(libraryCardVisualPrefab, libraryCardParent);
+        }
 
         private void ReturnLibVisual(LibraryCardVisual vis)
         {
@@ -122,15 +125,15 @@ namespace Prototype
         public void ResortDeck(Func<CardData, IComparable> keySelector)
         {
             var ordered = deckVisByInst.Values.OrderBy(v => keySelector(v.Data)).ToArray();
-            for (int i = 0; i < ordered.Length; ++i)
+            for (var i = 0; i < ordered.Length; ++i)
                 ordered[i].transform.SetSiblingIndex(i);
         }
 
         private void OnLibraryCardPicked(CardVisual visual)
         {
-            var id     = visual.Data.id;
-            var entry  = currentLibrary[id];
-            var inst   = entry.instance;
+            var id = visual.Data.id;
+            var entry = currentLibrary[id];
+            var inst = entry.instance;
 
             // library side
             entry.SetAmount(entry.Amount - 1);
@@ -195,25 +198,25 @@ namespace Prototype
         {
             hype = currentDeck.Sum(c => c.Data.cost);
 
-            hypeValue.text  = $"{hype}/{hypeMin}";
-            var alpha       = (float)hype / hypeMin;
-            var color       = hypeGradient.Evaluate(Mathf.Clamp01((alpha - 1f) / 3f));
+            hypeValue.text = $"{hype}/{hypeMin}";
+            var alpha = (float) hype / hypeMin;
+            var color = hypeGradient.Evaluate(Mathf.Clamp01((alpha - 1f) / 3f));
             hypeValue.color = hype < hypeMin ? Color.white : color;
 
-            hypeSlider.value      = Mathf.Clamp01(alpha);
-            hypeSliderFill.color  = color;
+            hypeSlider.value = Mathf.Clamp01(alpha);
+            hypeSliderFill.color = color;
 
             hypeLabel.text = "Hype Lvl: " + alpha switch
             {
-                < 1f   => "Low",
+                < 1f => "Low",
                 < 1.2f => "High",
                 < 1.6f => "Very High",
                 < 2.3f => "Extreme",
-                < 3f   => "Extra Extreme",
-                _      => "??"
+                < 3f => "Extra Extreme",
+                _ => "??"
             };
 
-            // fightButton.interactable = hype >= hypeMin;
+            fightButton.interactable = !shouldRestrictHype || hype >= hypeMin;
         }
 
         private void UpdateCountLabels()
@@ -221,7 +224,7 @@ namespace Prototype
             var libCount = 0;
             foreach (var (_, entry) in currentLibrary) libCount += entry.Amount;
             libraryLabel.text = $"Library ({libCount})";
-            deckLabel.text    = $"Arena ({deckVisByInst.Values.Count(v => v.gameObject.activeSelf)})";
+            deckLabel.text = $"Arena ({deckVisByInst.Values.Count(v => v.gameObject.activeSelf)})";
         }
 
         private void Awake()
@@ -238,7 +241,7 @@ namespace Prototype
 
         private void OnFightButton()
         {
-            // if (hype < hypeMin) return;
+            if (shouldRestrictHype && hype < hypeMin) return;
             CompleteBuilding = true;
         }
 
@@ -254,7 +257,9 @@ namespace Prototype
         }
 
         private LibraryData[] DEBUG_Library()
-            => gameDb.AllCards.Select(x => new LibraryData { id = x.id, amount = 1 }).ToArray();
+        {
+            return gameDb.AllCards.Select(x => new LibraryData {id = x.id, amount = 1}).ToArray();
+        }
 
         private string[] GetSavedDeck()
         {

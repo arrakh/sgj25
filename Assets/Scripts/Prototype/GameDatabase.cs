@@ -13,11 +13,13 @@ namespace Prototype
         [SerializeField] private TextAsset progressionJson;
         [SerializeField] private TextAsset startingDeckJson;
         
+        public ProgressionEntry[] ProgressionData => progressionData;
         public CardData[] AllCards => allCards.Values.ToArray();
         public string[] StartingDeck => startingDeck;
         
         private Dictionary<string, CardData> allCards = new();
         private string[] startingDeck;
+        private ProgressionEntry[] progressionData;
 
         public bool TryInitialize()
         {
@@ -27,6 +29,8 @@ namespace Prototype
                 foreach (var card in cards) allCards[card.id] = card;
 
                 startingDeck = JsonConvert.DeserializeObject<string[]>(startingDeckJson.text);
+
+                progressionData = JsonConvert.DeserializeObject<ProgressionEntry[]>(progressionJson.text);
             }
             catch (Exception e)
             {

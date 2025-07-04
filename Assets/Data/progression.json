@@ -1,10 +1,61 @@
 [
   {
     "minHype": 55,
-    "targetScore": 999,
+    "targetScore": 2750,
     "cardRewards": 
     [
-      "dagger-1"  
+      "health-potion-8",
+      "sword-5",
+      "health-potion-6",
+      "dagger-3",
+      "switch-order-x",
+      "cheat-sheet-x",
+      "sharpening-kit-2",
+      "stone-golem-5",
+      "stone-golem-5",
+      "stone-golem-5",
+      "stone-golem-6",
+      "stone-golem-6",
+      "stone-golem-7",
+      "stone-golem-7",
+      "gladiator-11",
+      "gladiator-12"
+    ]
+  },
+  {
+    "minHype": 70,
+    "targetScore": 3500,
+    "cardRewards":
+    [
+      "spear-9",
+      "spear-10",
+      "soul-blade-6",
+      "health-potion-8",
+      "health-potion-9",
+      "sharpening-kit-3",
+      "switch-order-x",
+      "cheat-sheet-x",
+      "stone-golem-7",
+      "stone-golem-8",
+      "lion-8",
+      "lion-9",
+      "lion-10"
+    ]
+  },
+  {
+    "minHype": 110,
+    "targetScore": 5500,
+    "cardRewards":
+    [
+      "stone-golem-11",
+      "stone-golem-12",
+      "stone-golem-13",
+      "stone-golem-14",
+      
+      "lion-11",
+      "lion-12",
+      "lion-13",
+      "lion-14"
     ]
   }
 ]
