@@ -2,9 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 using DG.Tweening;
+using UnityEngine.UI;
+using UnityEngine.UI.Extensions;
+using Button = UnityEngine.UI.Button;
 
 namespace Prototype
 {
@@ -18,18 +20,20 @@ namespace Prototype
         public Transform remainingContainer;
         public GameObject resultCardPrefab;
         public Button nextButton;
+        public ScrollRect defeatedView, remainingView;
 
-        [Header("Effect References")]
-        public RectTransform panelToShake;      // assign panel utama result screen
+        [Header("Effect References")]    // assign panel utama result screen
         public GameObject confettiPrefab;       // assign particle system confetti
 
         [Header("Animation Settings")]
         public float delayBetweenCards = 0.3f;
 
+        public int Score => score;
+
         private int score = 0;
 
         private bool done = false;
-
+        
         private void Awake()
         {
             nextButton.onClick.AddListener(() => done = true);
@@ -46,10 +50,10 @@ namespace Prototype
             targetScoreText.text = targetScore.ToString();
             
             foreach (var data in gameResult.enemyDefeated)
-                yield return ShowCardAndAddScore(data.Data, defeatedContainer);
-
+                yield return ShowCardAndAddScore(gameResult.win, data.Data, defeatedContainer, defeatedView);
+            
             foreach (var data in gameResult.itemsLeft)
-                yield return ShowCardAndAddScore(data.Data , remainingContainer);
+                yield return ShowCardAndAddScore(gameResult.win,data.Data , remainingContainer, remainingView);
 
             // 🎉 Confetti di akhir
             SpawnConfetti();
@@ -59,46 +63,44 @@ namespace Prototype
             yield return new WaitUntil(() => done);
         }
 
-        private IEnumerator ShowCardAndAddScore(CardData data, Transform container)
+        private IEnumerator ShowCardAndAddScore(bool win, CardData data, Transform container, ScrollRect rect)
         {
-            GameObject cardObj = Instantiate(resultCardPrefab, container);
-            var display = cardObj.GetComponent<ResultCardDisplay>();
-            display.Setup(data);
-
-            cardObj.transform.localScale = Vector3.zero;
-            yield return cardObj.transform
-                .DOScale(Vector3.one, 0.25f)
-                .SetEase(Ease.OutBack)
-                .WaitForCompletion();
-
+            var cardScore = !win ? 0 : Mathf.Abs(data.cost) * 5;
+            
             // 🔢 Score naik animasi
             int startValue = score;
-            int endValue = score + data.value;
+            int endValue = score + cardScore;
             score = endValue;
+            
+            GameObject cardObj = Instantiate(resultCardPrefab, container);
+            var display = cardObj.GetComponent<ResultCardDisplay>();
+            display.Setup(data, cardScore);
+
+            cardObj.transform.localScale = Vector3.zero;
+            cardObj.transform
+                .DOScale(Vector3.one, 0.25f)
+                .SetEase(Ease.OutBack);
 
             // 🔢 Animasi naik skor + scale text
             DOTween.To(() => startValue, x =>
             {
                 startValue = x;
                 scoreText.text = startValue.ToString();
-            }, endValue, 0.3f).OnStart(() =>
+            }, endValue, delayBetweenCards).OnStart(() =>
             {
                 // Scale up
-                scoreText.rectTransform.DOScale(1.3f, 0.15f)
+                scoreText.rectTransform.DOScale(1.3f, 0.12f)
                     .SetEase(Ease.OutBack)
                     .OnComplete(() =>
                     {
                         // Scale back to normal
-                        scoreText.rectTransform.DOScale(1f, 0.15f)
+                        scoreText.rectTransform.DOScale(1f, 0.33f)
                             .SetEase(Ease.OutBack);
                     });
             });
-            // 💢 Shake panel
-            if (panelToShake != null)
-            {
-                panelToShake.DOShakeAnchorPos(0.3f, 15f, 10, 90);
-            }
-
+            
+            rect.ScrollToBottom();
+            
             yield return new WaitForSeconds(delayBetweenCards);
         }
 
