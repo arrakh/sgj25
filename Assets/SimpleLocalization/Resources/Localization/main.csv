@@ -1,4 +1,4 @@
-key,en,id
+key,English,Indonesia
 name,English,Bahasa Indonesia
 you-lost,You lost...,Kamu kalah...
 you-win,You win!,Kamu menang!
@@ -21,3 +21,27 @@ all,All,Semua
 library,Library,Pustaka
 clear,Clear,Hapus
 fight,Fight,Tarung
+arena-points,Arena Points,Poin Arena
+hype-levels,Hype Levels,Level Hype
+tutorial-deck-building,"- Place the objects you want to appear in the arena -
+
+- The higher the arena points, the higher the level of difficulty -
+
+- The higher the difficulty level, the more followers you’ll gain in the game -
+
+- Unlock more objects by reaching a certain number of followers in the game -
+
+- Good luck -","- Pasangkan objek yang akan muncul di arena sesuai keinginanmu -
+
+- Semakin tinggi arena point, semakin tinggi tingkat kesulitan permainan -
+
+- Semakin tinggi tingkat kesulitan, semakin banyak follower yang didapatkan dalam permainan -
+
+- Dapatkan objek-objek lain dari mendapatkan sejumlah follower tertentu dalam permainan -
+
+- Semoga berhasil -"
+back,Back,Kembali
+delete-data,Delete Player Data,Hapus Data
+cutscene-1,"Ladies and gentlemen, are you ready, for the greatest entertainment in all Rome, ColosStream!?","Hadirin sekalian, apakah kalian sudah siap, untuk pertunjukan nomor 1 di seluruh kota Roma, ColosStream!?"
+cutscene-2,"Let's welcome, our number 1 gladiator, the idol of all mankind, Clauuudiaaaa Toooriaaaa Maaaxiiimaaaa!!!!","Mari kita sambut, gladiator nomor 1 kita, idola seluruh umat manusia, Clauuudiaaaa Toooriaaaa Maaaxiiimaaaa!!!!"
+cutscene-3,"Heya, Claudiacs! Thanks for coming! As always, please give me your biggest support!! (Hehehe, this will be a piece of cake, just as planned...)","Hai hai Claudiacs! Terima kasih sudah datang! Dukung aku ya!! (Hehehe, ini akan sangat mudah sesuai dengan rencana...)"
