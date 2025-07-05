@@ -76,3 +76,5 @@ back-to-menu,Back to Menu,Kembali ke Menu,Voltar ao menu
 back-warning,Warning: Any unsaved progress will be lost,Perhatian: Data yang tidak tersimpan akan hilang,Aviso: Qualquer progresso não salvo será perdido
 quit,Quit,Keluar,Desistir
 skip,Skip,Lewati,Pular
+save-warning,WARNING: Only delete data if your are SURE!,PERHATIAN: Hapus data pemain jika kamu sudah yakin,AVISO: Exclua os dados somente se tiver CERTEZA!
+reset-confirm,Press the button again to confirm! This will reset the game,Tekan tombol lagi untuk konfirmasi! Game akan di reset,Pressione o botão novamente para confirmar! Isso reiniciará o jogo.

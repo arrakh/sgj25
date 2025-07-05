@@ -5222,6 +5222,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1002555224489725591, guid: 03f4e7f2849164139a1aafb0e16bf8a1, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1002555224489725591, guid: 03f4e7f2849164139a1aafb0e16bf8a1, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 9003384138605849762}
+    - target: {fileID: 1002555224489725591, guid: 03f4e7f2849164139a1aafb0e16bf8a1, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetActive
+      objectReference: {fileID: 0}
+    - target: {fileID: 1002555224489725591, guid: 03f4e7f2849164139a1aafb0e16bf8a1, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UnityEngine.GameObject, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 1002555224489725591, guid: 03f4e7f2849164139a1aafb0e16bf8a1, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4643128124256688836, guid: 03f4e7f2849164139a1aafb0e16bf8a1, type: 3}
       propertyPath: objectToShow
       value: 
@@ -5235,17 +5255,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 03f4e7f2849164139a1aafb0e16bf8a1, type: 3}
---- !u!114 &1679600470788160977 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4643128124256688836, guid: 03f4e7f2849164139a1aafb0e16bf8a1, type: 3}
-  m_PrefabInstance: {fileID: 6278184830448051989}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd1af305315a74fe8bf88b97ba446621, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &6684274901528934273 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 856747486107848852, guid: 03f4e7f2849164139a1aafb0e16bf8a1, type: 3}
@@ -5262,7 +5271,11 @@ PrefabInstance:
     - target: {fileID: 331785731405121426, guid: 04e5d05d95bdd46139e1a9df09fae668, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1679600470788160977}
+      objectReference: {fileID: 9003384138605849762}
+    - target: {fileID: 331785731405121426, guid: 04e5d05d95bdd46139e1a9df09fae668, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetActive
+      objectReference: {fileID: 0}
     - target: {fileID: 2096187475190638429, guid: 04e5d05d95bdd46139e1a9df09fae668, type: 3}
       propertyPath: m_Name
       value: Tutorial
