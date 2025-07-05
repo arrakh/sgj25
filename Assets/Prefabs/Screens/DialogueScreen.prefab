@@ -915,6 +915,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Skip Button
       objectReference: {fileID: 0}
+    - target: {fileID: 1231531900550165572, guid: 64d3fbd225decc54e85ab2686bb0a5a4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3209182074175566314, guid: 64d3fbd225decc54e85ab2686bb0a5a4, type: 3}
       propertyPath: m_Pivot.x
       value: 1

@@ -8,6 +8,7 @@ using Assets.SimpleLocalization.Scripts;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 namespace Prototype
 {
@@ -126,6 +127,7 @@ namespace Prototype
             if (!isDialogueActive) return;
 
             requestEndDialogue = true;
+
 
             if (playRoutine != null)
             {
