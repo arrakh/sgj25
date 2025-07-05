@@ -35,5 +35,10 @@ namespace Prototype
         {
             LocalizationManager.Language = language;
         }
+
+        public void Quit()
+        {
+            Application.Quit();
+        }
     }
 }

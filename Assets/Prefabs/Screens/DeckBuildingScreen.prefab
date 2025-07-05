@@ -4304,7 +4304,6 @@ GameObject:
   - component: {fileID: 7597712898665535900}
   - component: {fileID: 3552463321638072368}
   - component: {fileID: 5850340384365356566}
-  - component: {fileID: 2249017817865173228}
   m_Layer: 5
   m_Name: Hype
   m_TagString: Untagged
@@ -4430,19 +4429,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &2249017817865173228
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6864052824795901197}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c45928eda0d4f418d3f38c54da4ee4a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  localizationKey: hype-levels
 --- !u!1 &6901261655785790182
 GameObject:
   m_ObjectHideFlags: 0

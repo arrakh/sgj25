@@ -5,8 +5,6 @@
 
 using System;
 using Assets.SimpleLocalization.Scripts;
-using Mono.Cecil.Cil;
-using UnityEngine.UIElements;
 using Utilities;
 
 namespace Prototype.CardComponents.Implementations

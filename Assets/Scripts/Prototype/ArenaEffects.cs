@@ -5,6 +5,7 @@ using Prototype.CardComponents.Implementations;
 using UnityEngine;
 using UnityEngine.UI;
 using Utilities;
+using Random = UnityEngine.Random;
 
 namespace Prototype
 {
@@ -55,6 +56,19 @@ namespace Prototype
 
         public void OnCardConsumed(CardVisual card)
         {
+            switch (card.Type)
+            {
+                case CardType.Weapon: Audio.PlaySfx("bling"); break;
+                case CardType.Monster: Audio.PlaySfx("slash"); Audio.PlaySfx("monster-dead"); break;
+                case CardType.Tool: Audio.PlaySfx("bling"); break;
+                case CardType.Item: 
+                    var hasHeal = card.Instance.HasComponent<HealComponent>();
+                    Audio.PlaySfx(hasHeal ? "potion" : "bling"); 
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+            
             return;
             Mimic(mimicImage, card.Icon);
 
@@ -177,6 +191,9 @@ namespace Prototype
         
         private void DoDamageEffect(float strength)
         {
+            var audioKey = $"damaged-{Random.Range(1, 3)}";
+            Audio.PlaySfx(audioKey);
+            
             ClearAllTweens();
             character.color = ScaleAlpha(damageCharacterFromColor, strength * vignetteStrength);
             currentTweens.Add(character.DOColor(Color.white, damageDuration));

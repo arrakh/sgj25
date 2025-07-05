@@ -4,7 +4,7 @@ name,English,Bahasa Indonesia,
 you-lost,You lost...,Kamu kalah...,Você perdeu...
 you-win,You win!,Kamu menang!,Você venceu!
 defeated-enemies,Defeated Enemies:,Musuh Terkalahkan:,Inimigos derrotados:
-left-in-arena,Left in Arena:,Tersisa di Arena:,Deixado na Arena:
+left-in-arena,Left in Arena:,Tersisa di Arena:,Esquerda na Arena:
 followers,Followers:,Pengikut:,Seguidores:
 target,Target:,Target:,Alvo:
 continue,Continue,Lanjut,Continuar
@@ -71,3 +71,7 @@ select-target,Select target,Pilih target,Selecione o alvo
 equip,Equip,Pakai,Equipar
 fight-barehanded,Fight Barehanded,Serang dengan Tangan,Lute com as mãos vazias
 use,Use,Pakai,Usar
+pause,Pause,Pause,Pausa
+back-to-menu,Back to Menu,Kembali ke Menu,Voltar ao menu
+back-warning,Warning: Any unsaved progress will be lost,Perhatian: Data yang tidak tersimpan akan hilang,Aviso: Qualquer progresso não salvo será perdido
+quit,Quit,Keluar,Desistir

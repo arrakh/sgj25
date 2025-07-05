@@ -33,6 +33,8 @@ namespace Prototype.CardComponents.Implementations
                 RaiseUpdateEvent();
                 return;
             }
+            
+            arena.SetShowNextCards(false);
 
             switch (cardInstance.Data.type)
             {
