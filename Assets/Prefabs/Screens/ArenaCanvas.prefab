@@ -2812,6 +2812,8 @@ MonoBehaviour:
   character: {fileID: 8795310234674586588}
   healthRect: {fileID: 4155049553052249673}
   weaponValueRect: {fileID: 4257073750582754013}
+  vignetteStrength: 1
+  damageMax: 10
   healDuration: 0.6
   healCharacterFromColor: {r: 0.5411765, g: 1, b: 0.5686275, a: 1}
   healVignetteFromColor: {r: 0.19215687, g: 1, b: 0.24313726, a: 0.7882353}
