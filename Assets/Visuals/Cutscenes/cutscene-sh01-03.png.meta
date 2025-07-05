@@ -173,7 +173,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      cutscene-sh01-03_0: -5860419890936044752
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
