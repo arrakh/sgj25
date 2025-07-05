@@ -610,7 +610,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6691618645346660076, guid: 3d643b3d34b2a15488671201ab11c6f8, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 93.025
+      value: 123.025
       objectReference: {fileID: 0}
     - target: {fileID: 6691618645346660076, guid: 3d643b3d34b2a15488671201ab11c6f8, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -670,7 +670,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7748670544648112730, guid: 3d643b3d34b2a15488671201ab11c6f8, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 199.5
+      value: 229.5
       objectReference: {fileID: 0}
     - target: {fileID: 7748670544648112730, guid: 3d643b3d34b2a15488671201ab11c6f8, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -767,6 +767,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!225 &619857715923929827 stripped
+CanvasGroup:
+  m_CorrespondingSourceObject: {fileID: 2862120740961106639, guid: 3d643b3d34b2a15488671201ab11c6f8, type: 3}
+  m_PrefabInstance: {fileID: 3396390218523078700}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &733133758056954910 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2670348346982992946, guid: 3d643b3d34b2a15488671201ab11c6f8, type: 3}
@@ -792,6 +797,11 @@ MonoBehaviour:
 --- !u!224 &1871124220428109076 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3951336343737644344, guid: 3d643b3d34b2a15488671201ab11c6f8, type: 3}
+  m_PrefabInstance: {fileID: 3396390218523078700}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &2339630926006827268 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 1106318733381093672, guid: 3d643b3d34b2a15488671201ab11c6f8, type: 3}
   m_PrefabInstance: {fileID: 3396390218523078700}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &4739643922740606300 stripped
@@ -826,19 +836,74 @@ MonoBehaviour:
   icon: {fileID: 4739643922740606300}
   nameplate: {fileID: 733133758056954910}
   background: {fileID: 22337396855304711}
+  valueRect: {fileID: 2339630926006827268}
   valueText: {fileID: 8810904337593820012}
   highlight: {fileID: 8131648736532060734}
   lockedImage: {fileID: 7577173604833677586}
   nameText: {fileID: 140240007524777650}
   componentController: {fileID: 1382668520211715264}
-  canvasGroup: {fileID: 0}
+  canvasGroup: {fileID: 619857715923929827}
   canSelect: 1
-  visualParent: {fileID: 0}
+  visualParent: {fileID: 1871124220428109076}
   revealTime: 1.2
   inDistance: 100
   inCurve:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0.78475153
+      outSlope: 0.78475153
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.041379314
+    - serializedVersion: 3
+      time: 1.6089102
+      value: 0.6989054
+      inSlope: 0.18392126
+      outSlope: 0.18392126
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.18987921
+      outWeight: 0.07249727
+    - serializedVersion: 3
+      time: 3.2027144
+      value: 0.90342945
+      inSlope: 0.07779715
+      outSlope: 0.07779715
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.18815468
+      outWeight: 0.13400188
+    - serializedVersion: 3
+      time: 5.0002193
+      value: 0.98036593
+      inSlope: 0.027841846
+      outSlope: 0.027841846
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.21099997
+      outWeight: 0.15392189
+    - serializedVersion: 3
+      time: 6.144692
+      value: 0.9971011
+      inSlope: 0.01039088
+      outSlope: 0.01039088
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 7
+      value: 1
+      inSlope: -0.00035028104
+      outSlope: -0.00035028104
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.1730853
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4

@@ -233,7 +233,7 @@ namespace Prototype
             hypeSlider.value = Mathf.Clamp01(alpha);
             hypeSliderFill.color = color;
 
-            hypeLabel.text = "Hype Lvl: " + alpha switch
+            hypeLabel.text = alpha switch
             {
                 < 1f => "Low",
                 < 1.2f => "High",

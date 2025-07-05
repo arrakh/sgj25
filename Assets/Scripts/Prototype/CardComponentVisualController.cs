@@ -50,6 +50,7 @@ namespace Prototype
 
         private void RebuildVisuals()
         {
+            if (visualParent == null) return;
             LayoutRebuilder.ForceRebuildLayoutImmediate(visualParent);
         }
     }

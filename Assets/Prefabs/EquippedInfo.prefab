@@ -208,6 +208,7 @@ MonoBehaviour:
   icon: {fileID: 3170906710864480592}
   background: {fileID: 6101744297200654881}
   nameplate: {fileID: 6683696427916730008}
+  valueRect: {fileID: 3099115398693431664}
   valueText: {fileID: 255602285452516726}
   nameText: {fileID: 5015901883621836553}
   componentController: {fileID: 1412709340652505270}

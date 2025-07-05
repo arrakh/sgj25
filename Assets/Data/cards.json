@@ -54,7 +54,7 @@
   {"id":"round-shield-9","displayName":"Round Shield","spriteId":"round-shield","type":"Tool","value":9,"cost":-4,"components":["shield"]},
   {"id":"round-shield-10","displayName":"Round Shield","spriteId":"round-shield","type":"Tool","value":10,"cost":-4,"components":["shield"]},
   {"id":"switch-order-x","displayName":"Switch Order","spriteId":"switch-order","type":"Item","value":0,"cost":-2,"components":["swap"]},
-  {"id":"cheat-sheet-x","displayName":"Cheat Sheet","spriteId":"cheat-sheet","type":"Item","value":0,"cost":-2,"components":["predict 3"]},
+  {"id":"cheat-sheet-x","displayName":"Cheat Sheet","spriteId":"cheat-sheet","type":"Tool","value":0,"cost":-2,"components":["predict 3"]},
   {"id":"gladiator-2","displayName":"Gladiator","spriteId":"gladiator","type":"Monster","value":2,"cost":1},
   {"id":"gladiator-3","displayName":"Gladiator","spriteId":"gladiator","type":"Monster","value":3,"cost":1},
   {"id":"gladiator-4","displayName":"Gladiator","spriteId":"gladiator","type":"Monster","value":4,"cost":2},
