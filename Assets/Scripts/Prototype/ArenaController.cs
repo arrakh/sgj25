@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Assets.SimpleLocalization.Scripts;
 using DG.Tweening;
 using Newtonsoft.Json;
 using Prototype.CardComponents;
@@ -20,8 +21,9 @@ namespace Prototype
         [SerializeField] private int cardLeftToNextTurn = 1;
         [SerializeField] private int maxHealth = 20;
         [SerializeField] private int runAwayCooldown = 2;
-        
+
         [Header("Scene References")] 
+        [SerializeField] private ArenaEffects arenaEffect;
         [SerializeField] private RectTransform cardParent;
         [SerializeField] private RectTransform nextCardsParent;
         [SerializeField] private TextMeshProUGUI roomText;
@@ -41,6 +43,9 @@ namespace Prototype
         [SerializeField] private TextMeshProUGUI runActionText;
 
         [SerializeField] private ArenaInfo arenaInfo;
+
+        [SerializeField] private Image[] roundSlots;
+        [SerializeField] private Image[] roundOrbs;
 
         [Header("Prefabs")] 
         [SerializeField] private CardVisual cardVisualPrefab;
@@ -69,6 +74,8 @@ namespace Prototype
         private CardInstance equippedWeapon = null;
         private CardInstance equippedTool = null;
 
+        private string selectText;
+
         private void Awake()
         {
             standardActionButton.onClick.AddListener(OnStandardAction);
@@ -87,22 +94,23 @@ namespace Prototype
             var hasEquippedWeapon = equippedWeapon != null;
             var hasEquippedTool = equippedTool != null;
             
-            standardActionButton.gameObject.SetActive(hasSelected);
+            standardActionButton.interactable = hasSelected;
+            if (!hasSelected) standardActionText.text = selectText;
+
             fightActionButton.gameObject.SetActive(hasSelected && hasEquippedWeapon && selectedCardVisual.Type == CardType.Monster );
             equippedWeaponVisual.gameObject.SetActive(hasEquippedWeapon);
             equippedToolVisual.gameObject.SetActive(hasEquippedTool);
-            
-            //runActionButton.gameObject.SetActive(roomCount > 1);
-            var canRun = currentRunCooldown <= 0;
-            runActionText.text = canRun ? "Run Away" : $"Cannot Run ({currentRunCooldown})";
-            runActionButton.interactable = canRun;
 
             var fucksGiven = 0;
         }
 
         public void StartArena(CardData[] cards)
         {
+            Audio.PlayBgm("combat");
+            selectText = LocalizationManager.Localize("select-target");
+
             ResetState();
+            SetRoundSlots();
 
             var random = cards.OrderBy(_ => Random.value);
             foreach (var card in random)
@@ -113,6 +121,34 @@ namespace Prototype
             isGameRunning = true;
 
             NextTurn();
+        }
+
+        private void SetRoundSlots()
+        {
+            for (var i = 0; i < roundSlots.Length; i++)
+            {
+                var slot = roundSlots[i];
+                slot.gameObject.SetActive(i < drawAmount);
+            }
+        }
+
+        private void SetDrawOrbs(int count)
+        {
+            for (int i = 0; i < roundOrbs.Length; i++)
+            {
+                var orb = roundOrbs[i];
+                orb.gameObject.SetActive(i < count);
+                if (i == count - 1) AnimateOrb(orb);
+            }
+        }
+
+        private void AnimateOrb(Image orb)
+        {
+            orb.color = Color.clear;
+            orb.DOColor(Color.white, 0.3f);
+            
+            orb.transform.localScale = Vector3.one * 1.2f;
+            orb.transform.DOScale(1f, 0.6f).SetEase(Ease.OutBounce);
         }
 
         private void ResetState()
@@ -138,12 +174,20 @@ namespace Prototype
 
         private void NextTurn()
         {
+            var canRun = currentRunCooldown <= 0;
+            var runAway = LocalizationManager.Localize("run-away");
+            var cannotRun = LocalizationManager.Localize("cannot-run", currentRunCooldown);
+            runActionText.text = canRun ? runAway : cannotRun;
+            runActionButton.interactable = canRun;
+            
             if (health <= 0)
             {
                 ConcludeGame(false);
                 return;
             }
 
+            var cardsDoneThisTurn = drawAmount - spawnedCards.Count;
+            SetDrawOrbs(cardsDoneThisTurn);
             if (spawnedCards.Count <= cardLeftToNextTurn) NextRound();
 
             arenaInfo.UpdateInfo(deck, spawnedCards.Select(x => x.Instance), discarded);
@@ -174,12 +218,16 @@ namespace Prototype
             foreach (var card in spawnedCards)
                 remainingCards.Add(card.Instance);
 
+            float delay = 0f;
             //Spawn Cards
             for (int i = spawnedCards.Count; i < drawAmount; i++)
             {
                 if (deck.Count <= 0) break;
-                SpawnCard();
+                SpawnCard(delay);
+                delay += 0.25f;
             }
+            
+            SetDrawOrbs(0);
 
             UpdateNextCards();
             
@@ -195,12 +243,12 @@ namespace Prototype
                 if(component is IOnNewRound newRound) newRound.OnNewRound(this);
         }
 
-        private void SpawnCard()
+        private void SpawnCard(float animDelay = 0f)
         {
             var card = deck.Dequeue();
             var cardObj = Instantiate(cardVisualPrefab, cardParent);
             cardObj.Display(card, OnCardPicked);
-
+            cardObj.RevealAnimation(animDelay);
             spawnedCards.Add(cardObj);
         }
 
@@ -231,14 +279,16 @@ namespace Prototype
             selectedCardVisual = cardVisual;
             selectedCardVisual.SetSelected(true);
 
-            standardActionText.text = selectedCardVisual.Type switch
+            var key = selectedCardVisual.Type switch
             {
-                CardType.Weapon => "Equip",
-                CardType.Monster => "Fight Barehanded",
-                CardType.Item => "Use",
-                CardType.Tool => "Equip",
+                CardType.Weapon => "equip",
+                CardType.Monster => "fight-barehanded",
+                CardType.Item => "use",
+                CardType.Tool => "equip",
                 _ => throw new ArgumentOutOfRangeException()
             };
+
+            standardActionText.text = LocalizationManager.Localize(key);
 
             bool canFightWithWeapon = selectedCardVisual.Type == CardType.Monster && equippedWeapon != null;
             fightActionButton.gameObject.SetActive(canFightWithWeapon);
@@ -307,9 +357,11 @@ namespace Prototype
             }
 
             if (finalAmount == 0) return;
-            
+
+            var oldHealth = health;
             health += finalAmount;
             health = Math.Clamp(health, 0, maxHealth);
+            arenaEffect.OnHealthChanged(oldHealth, health);
 
             var shakeDur = Mathf.Clamp01(finalAmount / 10f);
             var color = finalAmount > 0 ? Color.green : Color.red;
@@ -360,6 +412,7 @@ namespace Prototype
             equippedWeapon.SetValue(newValue);
             equippedWeaponVisual.Display(equippedWeapon, null);
             ShakeColorAnimateText(equippedValueText, color, 0.3f);
+            arenaEffect.OnWeaponValueChanged();
         }
 
         private void OnEquipWeaponAction()
@@ -432,20 +485,38 @@ namespace Prototype
             NextTurn();
         }
 
+        [ContextMenu("AutoWin")]
+        private void AutoWin()
+        {
+            var list = deck.ToList();
+            list.AddRange(spawnedCards.Select(x => x.Instance));
+            
+            ClearCards();
+            deck.Clear();
+
+            foreach (var card in list)
+            {
+                if (IsNotMonster(card)) deck.Enqueue(card);
+                else discarded.Add(card);
+            }
+            
+            ConcludeGame(true);
+        }
+
         private void ConcludeGame(bool win)
         {
             var enemyDefeated = discarded.Where(x => x.Data.type == CardType.Monster).ToList();
 
-            var itemsLeft = deck.Where(CardFilter).ToList();
+            var itemsLeft = deck.Where(IsNotMonster).ToList();
             
             if (spawnedCards.Count > 0)
-                itemsLeft.AddRange(spawnedCards.Select(x => x.Instance).Where(CardFilter));
+                itemsLeft.AddRange(spawnedCards.Select(x => x.Instance).Where(IsNotMonster));
 
             gameResult = new GameResult(win, enemyDefeated, itemsLeft);
             isGameRunning = false;
         }
 
-        private bool CardFilter(CardInstance instance)
+        private bool IsNotMonster(CardInstance instance)
             => instance.Data.type switch
             {
                 CardType.Monster => false,

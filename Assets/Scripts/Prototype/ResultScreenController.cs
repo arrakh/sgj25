@@ -1,22 +1,19 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using Assets.SimpleLocalization.Scripts;
-using UnityEngine;
-using TMPro;
 using DG.Tweening;
+using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UI.Extensions;
-using Button = UnityEngine.UI.Button;
 
 namespace Prototype
 {
     public class ResultScreenController : MonoBehaviour
     {
         private const int SCORE_COST_MULT = 50;
-        
-        [Header("UI References")]
-        public TextMeshProUGUI resultText;
+
+        [Header("UI References")] public TextMeshProUGUI resultText;
         public TextMeshProUGUI scoreText;
         public TextMeshProUGUI targetScoreText;
         public Transform defeatedContainer;
@@ -25,18 +22,17 @@ namespace Prototype
         public Button nextButton;
         public ScrollRect defeatedView, remainingView;
 
-        [Header("Effect References")]    // assign panel utama result screen
-        public GameObject confettiPrefab;       // assign particle system confetti
+        [Header("Effect References")] // assign panel utama result screen
+        public GameObject confettiPrefab; // assign particle system confetti
 
-        [Header("Animation Settings")]
-        public float delayBetweenCards = 0.3f;
+        [Header("Animation Settings")] public float delayBetweenCards = 0.3f;
 
-        public int Score => score;
+        private List<GameObject> spawned = new();
 
-        private int score = 0;
+        public int Score { get; private set; }
 
-        private bool done = false;
-        
+        private bool done;
+
         private void Awake()
         {
             nextButton.onClick.AddListener(() => done = true);
@@ -44,20 +40,25 @@ namespace Prototype
 
         public IEnumerator PlayResult(GameResult gameResult, int targetScore)
         {
-            nextButton.gameObject.SetActive(false);
-
             done = false;
-            var key = gameResult.win ? "you-lost" : "you-win";
+
+            ResetState();
+            
+            nextButton.gameObject.SetActive(false);
+            
+            Audio.PlayBgm(gameResult.win ? "victory" : "defeat", true);
+
+            var key = gameResult.win ? "you-win" : "you-lost";
             resultText.text = LocalizationManager.Localize(key);
-            score = 0;
+            Score = 0;
             scoreText.text = "0";
             targetScoreText.text = targetScore.ToString();
-            
+
             foreach (var data in gameResult.enemyDefeated)
                 yield return ShowCardAndAddScore(gameResult.win, data.Data, defeatedContainer, defeatedView);
-            
+
             foreach (var data in gameResult.itemsLeft)
-                yield return ShowCardAndAddScore(gameResult.win,data.Data , remainingContainer, remainingView);
+                yield return ShowCardAndAddScore(gameResult.win, data.Data, remainingContainer, remainingView);
 
             // 🎉 Confetti di akhir
             SpawnConfetti();
@@ -67,18 +68,27 @@ namespace Prototype
             yield return new WaitUntil(() => done);
         }
 
+        private void ResetState()
+        {
+            foreach (var obj in spawned)
+                Destroy(obj);
+            
+            spawned.Clear();
+        }
+
         private IEnumerator ShowCardAndAddScore(bool win, CardData data, Transform container, ScrollRect rect)
         {
             var cardScore = !win ? 0 : Mathf.Abs(data.cost) * SCORE_COST_MULT;
-            
+
             // 🔢 Score naik animasi
-            int startValue = score;
-            int endValue = score + cardScore;
-            score = endValue;
-            
-            GameObject cardObj = Instantiate(resultCardPrefab, container);
+            var startValue = Score;
+            var endValue = Score + cardScore;
+            Score = endValue;
+
+            var cardObj = Instantiate(resultCardPrefab, container);
             var display = cardObj.GetComponent<ResultCardDisplay>();
             display.Setup(data, cardScore);
+            spawned.Add(cardObj);
 
             cardObj.transform.localScale = Vector3.zero;
             cardObj.transform
@@ -102,47 +112,44 @@ namespace Prototype
                             .SetEase(Ease.OutBack);
                     });
             });
-            
+
             rect.ScrollToBottom();
-            
+
             yield return new WaitForSeconds(delayBetweenCards);
         }
 
-private void SpawnConfetti()
-{
-    if (confettiPrefab != null)
-    {
-        // Instantiate prefab
-        GameObject confetti = Instantiate(confettiPrefab);
-
-        // Cari Canvas (harus Canvas UI, bukan world)
-        Canvas canvas = GetComponentInParent<Canvas>();
-        if (canvas != null)
+        private void SpawnConfetti()
         {
-            // Set parent ke canvas
-            confetti.transform.SetParent(canvas.transform, false);
-
-            RectTransform rect = confetti.GetComponent<RectTransform>();
-            if (rect != null)
+            if (confettiPrefab != null)
             {
-                // Pindahkan ke bagian atas layar
-                float canvasHeight = canvas.GetComponent<RectTransform>().rect.height;
-                rect.anchoredPosition = new Vector2(0f, canvasHeight / 2f); // di tengah atas
-            }
-            else
-            {
-                Debug.LogWarning("Confetti prefab tidak punya RectTransform.");
-            }
+                // Instantiate prefab
+                var confetti = Instantiate(confettiPrefab);
 
-            var ps = confetti.GetComponent<ParticleSystem>();
-            if (ps != null)
-            {
-                ps.Play();
-            }
+                // Cari Canvas (harus Canvas UI, bukan world)
+                var canvas = GetComponentInParent<Canvas>();
+                if (canvas != null)
+                {
+                    // Set parent ke canvas
+                    confetti.transform.SetParent(canvas.transform, false);
 
-            Destroy(confetti, 0.5f);
+                    var rect = confetti.GetComponent<RectTransform>();
+                    if (rect != null)
+                    {
+                        // Pindahkan ke bagian atas layar
+                        var canvasHeight = canvas.GetComponent<RectTransform>().rect.height;
+                        rect.anchoredPosition = new Vector2(0f, canvasHeight / 2f); // di tengah atas
+                    }
+                    else
+                    {
+                        Debug.LogWarning("Confetti prefab tidak punya RectTransform.");
+                    }
+
+                    var ps = confetti.GetComponent<ParticleSystem>();
+                    if (ps != null) ps.Play();
+
+                    Destroy(confetti, 0.5f);
+                }
+            }
         }
-    }
-}
     }
 }

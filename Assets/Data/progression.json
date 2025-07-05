@@ -1,7 +1,7 @@
 [
   {
     "minHype": 55,
-    "targetScore": 2750,
+    "targetScore": 5500,
     "cardRewards": 
     [
       "health-potion-8",
@@ -24,7 +24,7 @@
   },
   {
     "minHype": 70,
-    "targetScore": 3500,
+    "targetScore": 6400,
     "cardRewards":
     [
       "spear-9",
@@ -44,7 +44,7 @@
   },
   {
     "minHype": 110,
-    "targetScore": 5500,
+    "targetScore": 9000,
     "cardRewards":
     [
       "stone-golem-11",

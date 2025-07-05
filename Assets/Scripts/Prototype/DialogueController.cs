@@ -2,72 +2,93 @@
  *   Copyright (c) 2025 
  *   All rights reserved.
  */
-using UnityEngine;
+
 using System.Collections;
-using TMPro;
-using UnityEngine.UI;
 using Assets.SimpleLocalization.Scripts;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
 
 namespace Prototype
 {
     public class DialogueController : MonoBehaviour
     {
-        [Header("UI Components")]
+        [Header("UI Components")] 
         public GameObject dialoguePanel;
         public TextMeshProUGUI dialogueText;
         public Button nextButton;
         public Button skipButton;
         public Image narationImage;
 
-        [Header("Dialogue Settings")]
+        [Header("Dialogue Settings")] 
         public DialogueEntry[] dialogueLines;
         public float typeSpeed = 0.005f;
         public float delayAfterLine = 2f;
 
-        private int currentIndex = 0;
-        private bool isDialogueActive = false;
-        private Coroutine dialogueRoutine;
-        private bool isTyping = false;
+        private int currentIndex;
+        private bool isTyping;
+        private bool isDialogueActive;
+        private bool requestSkipLine;
+        private bool requestEndDialogue;
+        private bool dialogueEnded;
+        private bool requestSkipWait;
 
-        void Start()
-        {
-            LocalizationManager.Read();
-            LocalizationManager.Language = "English";
-            InitDialogue();
-        }
+        private Coroutine playRoutine;
 
-        public void InitDialogue()
+        public IEnumerator Initialize()
         {
-            if (dialogueLines.Length == 0)
+            gameObject.SetActive(false);
+            
+            Audio.PlayBgm("menu");
+
+            if (dialogueLines == null || dialogueLines.Length == 0)
             {
-                Debug.LogWarning("Dialogue lines is empty!");
-                return;
+                Debug.LogWarning("Dialogue lines are empty!");
+                yield break;
             }
+
+            currentIndex = 0;
+            isTyping = false;
+            isDialogueActive = true;
+            requestSkipLine = false;
+            requestSkipWait = false;
+            requestEndDialogue = false;
+            dialogueEnded = false;
+
+            nextButton.onClick.RemoveAllListeners();
+            nextButton.onClick.AddListener(OnNextPressed);
+
+            skipButton.onClick.RemoveAllListeners();
+            skipButton.onClick.AddListener(OnSkipPressed);
 
             dialoguePanel.SetActive(true);
             skipButton.gameObject.SetActive(true);
-            currentIndex = 0;
-            isDialogueActive = true;
+            gameObject.SetActive(true);
 
-            nextButton.onClick.RemoveAllListeners();
-            nextButton.onClick.AddListener(NextOrSkipTyping);
-
-            skipButton.onClick.RemoveAllListeners();
-            skipButton.onClick.AddListener(SkipDialogue);
-
-            if (dialogueRoutine != null) StopCoroutine(dialogueRoutine);
-            dialogueRoutine = StartCoroutine(PlayDialogue());
+            playRoutine = StartCoroutine(PlayDialogue());
+            yield return playRoutine;
         }
 
         private IEnumerator PlayDialogue()
         {
-            
-            while (currentIndex < dialogueLines.Length)
+            while (currentIndex < dialogueLines.Length && !requestEndDialogue)
             {
+                requestSkipWait = false;
+                // Set visuals for this line
                 narationImage.sprite = dialogueLines[currentIndex].image;
-                var translated = LocalizationManager.Localize(dialogueLines[currentIndex].content);
-                yield return StartCoroutine(TypeLine(translated));
-                yield return new WaitForSeconds(delayAfterLine);
+                var text = LocalizationManager.Localize(dialogueLines[currentIndex].content);
+
+                yield return StartCoroutine(TypeLine(text));
+
+                if (requestEndDialogue) break;
+
+                var timer = 0f;
+                while (timer < delayAfterLine && !requestEndDialogue && !requestSkipWait)
+                {
+                    timer += Time.deltaTime;
+                    yield return null;
+                }
+
                 currentIndex++;
             }
 
@@ -78,62 +99,51 @@ namespace Prototype
         {
             dialogueText.text = "";
             isTyping = true;
+            requestSkipLine = false;
 
-            foreach (char c in line)
+            foreach (var c in line)
             {
+                if (requestSkipLine || requestEndDialogue) break;
+
                 dialogueText.text += c;
                 yield return new WaitForSeconds(typeSpeed);
             }
 
+            dialogueText.text = line;
             isTyping = false;
+            requestSkipLine = false;
         }
 
-        private void NextOrSkipTyping()
+        private void OnNextPressed()
         {
-            if (isTyping)
-            {
-                Debug.Log("testtt");
-                // Langsung tampilkan kalimat lengkap jika masih ngetik
-                StopAllCoroutines();
-                var translated = LocalizationManager.Localize(dialogueLines[currentIndex].content);
-                dialogueText.text = translated;
-                isTyping = false;
-
-                // Restart coroutine lanjut dialog (auto next)
-                dialogueRoutine = StartCoroutine(WaitAfterForceComplete());
-            }
+            if (isTyping) requestSkipLine = true;
+            else requestSkipWait = true;
         }
 
-        private IEnumerator WaitAfterForceComplete()
+        private void OnSkipPressed()
         {
-            yield return new WaitForSeconds(delayAfterLine);
-            currentIndex++;
-            if (currentIndex < dialogueLines.Length)
-            {
-                dialogueRoutine = StartCoroutine(PlayDialogue());
-            }
-            else
-            {
-                EndDialogue();
-            }
-        }
+            if (!isDialogueActive) return;
 
-        public void SkipDialogue()
-        {
-            if (dialogueRoutine != null)
+            requestEndDialogue = true;
+
+            if (playRoutine != null)
             {
-                StopCoroutine(dialogueRoutine);
+                StopCoroutine(playRoutine);
+                playRoutine = null;
             }
-            StopAllCoroutines();
+
             EndDialogue();
         }
 
         private void EndDialogue()
         {
+            if (dialogueEnded) return;
+            dialogueEnded = true;
             isDialogueActive = false;
+
             dialoguePanel.SetActive(false);
             skipButton.gameObject.SetActive(false);
-
+            gameObject.SetActive(false);
         }
     }
 }

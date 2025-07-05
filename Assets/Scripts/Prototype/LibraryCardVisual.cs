@@ -22,7 +22,7 @@ namespace Prototype
 
         public void SetAmount(int newAmount)
         {
-            amountText.text = $"x{newAmount}";
+            amountText.text = newAmount <= 1 ? "" : newAmount.ToString();
         }
     }
 }

@@ -9,14 +9,17 @@ namespace Prototype
 {
     public class GameController : MonoBehaviour
     {
-        private const string STAGE = "stage";
         private static bool _staticInitialized = false;
         
         [Header("Scene")]
+        [SerializeField] private FadeScreen fadeScreen;
         [SerializeField] private ArenaController arenaController;
         [SerializeField] private DeckBuildingScreen deckBuildingScreen;
         [SerializeField] private GameDatabase gameDb; 
         [SerializeField] private ResultScreenController resultScreen;
+        [SerializeField] private RewardScreen rewardScreen;
+        [SerializeField] private GameSaveController gameSave;
+        [SerializeField] private DialogueController dialogue;
 
         [Header("Data")]
         [SerializeField] private SpriteDatabase[] spriteDatabases;
@@ -41,7 +44,10 @@ namespace Prototype
             //yield return TestResultScreen();
             //yield break;
             
-            stage = PlayerPrefs.GetInt(STAGE, 0);
+            Audio.FadeBgm(0f, 1f, 2f);
+            fadeScreen.FadeOut(1.2f);
+
+            stage = gameSave.LoadStageIndex();
             lastStage = gameDb.ProgressionData.Length - 1;
 
             if (stage < lastStage) yield return CampaignPlay();
@@ -52,38 +58,75 @@ namespace Prototype
         private IEnumerator FreePlay()
         {
             var data = gameDb.ProgressionData.Last();
-            while (true) yield return GameLoop(data, true);
+            while (true) yield return GameLoop(data, true, false);
         }
 
         private IEnumerator CampaignPlay()
         {
+            Debug.Log("PLAYING CAMPAIGN");
+            
+            if (stage == 0) yield return dialogue.Initialize();
+            
             var progression = gameDb.ProgressionData;
+
+            Debug.Log($"Campaign: Stage {stage}");
 
             for (int i = stage; i < progression.Length; i++)
             {
                 var data = progression[i];
-                yield return GameLoop(data, false);
+                yield return GameLoop(data, false, i == 0);
                 
                 var score = resultScreen.Score;
                 if (score < data.targetScore) continue;
 
-                //show result screen
+                AddAndSaveRewardToLibrary(data);
+
+                rewardScreen.gameObject.SetActive(true);
+                yield return rewardScreen.DisplayRewards(data.cardRewards);
+                
                 stage++;
-                PlayerPrefs.SetInt(STAGE, stage);
+                gameSave.SaveStageIndex(stage);
             }
         }
 
-        private IEnumerator GameLoop(ProgressionEntry progression, bool isFreePlay)
+        private void AddAndSaveRewardToLibrary(ProgressionEntry data)
         {
-            deckBuildingScreen.Initialize(progression.minHype, !isFreePlay);
-            deckBuildingScreen.gameObject.SetActive(true);
+            var library = gameSave.LoadLibrary().ToList();
+            Dictionary<string, LibraryData> libraryData = library.ToDictionary(x => x.id, y => y);
+            foreach (var cardId in data.cardRewards)
+            {
+                if (libraryData.TryGetValue(cardId, out var existing))
+                    libraryData[cardId] = new LibraryData(cardId, existing.amount + 1);
+                else libraryData[cardId] = new LibraryData(cardId, 1);
+            }
+
+            gameSave.SaveLibrary(libraryData.Values.ToArray());
+        }
+
+        private IEnumerator GameLoop(ProgressionEntry progression, bool isFreePlay, bool skipDeckBuilding)
+        {
             resultScreen.gameObject.SetActive(false);
-                
-            yield return new WaitUntil(() => deckBuildingScreen.CompleteBuilding);
-            var deck = deckBuildingScreen.Deck;
-            deckBuildingScreen.gameObject.SetActive(false);
+            rewardScreen.gameObject.SetActive(false);
             
-            arenaController.StartArena(deck);
+            Debug.Log($"Start of Game Loop! Skip Deck Build? {skipDeckBuilding}");
+
+            if (!skipDeckBuilding)
+            {
+                deckBuildingScreen.Initialize(progression.minHype, !isFreePlay);
+                deckBuildingScreen.gameObject.SetActive(true);
+                yield return new WaitUntil(() => deckBuildingScreen.CompleteBuilding);
+                var deck = deckBuildingScreen.Deck;
+                deckBuildingScreen.gameObject.SetActive(false);  
+                arenaController.StartArena(deck);
+            }
+            else
+            {
+                deckBuildingScreen.gameObject.SetActive(false);  
+                var deckData = gameSave.LoadDeck();
+                var deck = deckData.Select(x => gameDb.GetCard(x)).ToArray();
+                arenaController.StartArena(deck);
+            }
+            
             yield return new WaitUntil(() => !arenaController.IsGameRunning);
             
             resultScreen.gameObject.SetActive(true);

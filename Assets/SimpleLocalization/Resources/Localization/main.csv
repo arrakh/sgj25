@@ -1,28 +1,29 @@
-key,English,Indonesia
-name,English,Bahasa Indonesia
-you-lost,You lost...,Kamu kalah...
-you-win,You win!,Kamu menang!
-defeated-enemies,Defeated Enemies:,Musuh Terkalahkan:
-left-in-arena,Left in Arena:,Tersisa di Arena:
-followers,Followers:,Pengikut:
-target,Target:,Target:
-continue,Continue,Lanjut
-halo,"Hello,{0} how are you? ","Halo, {0} apa kabar? "
-start-game,Start Game,Mulai Bermain
-language,Language,Bahasa
-settings,Settings,Pengaturan
-credits,Credits,Kredit
-build-your-arena,Build Your Arena,Susun Arenamu
-weapons,Weapons,Senjata
-items,Items,Barang
-tools,Tools,Alat
-enemy,Enemy,Musuh
-all,All,Semua
-library,Library,Pustaka
-clear,Clear,Hapus
-fight,Fight,Tarung
-arena-points,Arena Points,Poin Arena
-hype-levels,Hype Levels,Level Hype
+key,English,Indonesia,Portuguese
+locale,en,id,pt
+name,English,Bahasa Indonesia,
+you-lost,You lost...,Kamu kalah...,Você perdeu...
+you-win,You win!,Kamu menang!,Você venceu!
+defeated-enemies,Defeated Enemies:,Musuh Terkalahkan:,Inimigos derrotados:
+left-in-arena,Left in Arena:,Tersisa di Arena:,Deixado na Arena:
+followers,Followers:,Pengikut:,Seguidores:
+target,Target:,Target:,Alvo:
+continue,Continue,Lanjut,Continuar
+halo,"Hello,{0} how are you? ","Halo, {0} apa kabar? ","Olá,{0} como vai?"
+start-game,Start Game,Mulai Bermain,Iniciar jogo
+language,Language,Bahasa,Linguagem
+settings,Settings,Pengaturan,Configurações
+credits,Credits,Kredit,Créditos
+build-your-arena,Build Your Arena,Susun Arenamu,Construa sua arena
+weapons,Weapons,Senjata,Armas
+items,Items,Barang,Unid
+tools,Tools,Alat,Ferramentas
+enemy,Enemy,Musuh,Inimigo
+all,All,Semua,Todos
+library,Library,Pustaka,Biblioteca
+clear,Clear,Hapus,Claro
+fight,Fight,Tarung,Lutar
+arena-points,Arena Points,Poin Arena,Pontos de Arena
+hype-levels,Hype Levels,Level Hype,Níveis de Hype
 tutorial-deck-building,"- Place the objects you want to appear in the arena -
 
 - The higher the arena points, the higher the level of difficulty -
@@ -39,9 +40,34 @@ tutorial-deck-building,"- Place the objects you want to appear in the arena -
 
 - Dapatkan objek-objek lain dari mendapatkan sejumlah follower tertentu dalam permainan -
 
-- Semoga berhasil -"
-back,Back,Kembali
-delete-data,Delete Player Data,Hapus Data
-cutscene-1,"Ladies and gentlemen, are you ready, for the greatest entertainment in all Rome, ColosStream!?","Hadirin sekalian, apakah kalian sudah siap, untuk pertunjukan nomor 1 di seluruh kota Roma, ColosStream!?"
-cutscene-2,"Let's welcome, our number 1 gladiator, the idol of all mankind, Clauuudiaaaa Toooriaaaa Maaaxiiimaaaa!!!!","Mari kita sambut, gladiator nomor 1 kita, idola seluruh umat manusia, Clauuudiaaaa Toooriaaaa Maaaxiiimaaaa!!!!"
-cutscene-3,"Heya, Claudiacs! Thanks for coming! As always, please give me your biggest support!! (Hehehe, this will be a piece of cake, just as planned...)","Hai hai Claudiacs! Terima kasih sudah datang! Dukung aku ya!! (Hehehe, ini akan sangat mudah sesuai dengan rencana...)"
+- Semoga berhasil -","- Coloque os objetos que você quer que apareçam na arena -
+
+- Quanto maior a pontuação na arena, maior o nível de dificuldade -
+
+- Quanto maior o nível de dificuldade, mais seguidores você ganhará no jogo -
+
+- Desbloqueie mais objetos alcançando um certo número de seguidores no jogo -
+
+- Boa sorte -"
+back,Back,Kembali,Voltar
+delete-data,Delete Player Data,Hapus Data,Excluir dados do jogador
+cutscene-1,"Ladies and gentlemen, are you ready, for the greatest entertainment in all Rome, ColosStream!?","Hadirin sekalian, apakah kalian sudah siap, untuk pertunjukan nomor 1 di seluruh kota Roma, ColosStream!?","Senhoras e senhores, vocês estão prontos para o maior entretenimento de Roma, o ColosStream!?"
+cutscene-2,"Let's welcome, our number 1 gladiator, the idol of all mankind, Clauuudiaaaa Toooriaaaa Maaaxiiimaaaa!!!!","Mari kita sambut, gladiator nomor 1 kita, idola seluruh umat manusia, Clauuudiaaaa Toooriaaaa Maaaxiiimaaaa!!!!","Vamos dar as boas-vindas ao nosso gladiador número 1, o ídolo de toda a humanidade, Clauuudiaaaa Toooriaaaa Maaaxiiimaaaa!!!!"
+cutscene-3,"Heya, Claudiacs! Thanks for coming! As always, please give me your biggest support!! (Hehehe, this will be a piece of cake, just as planned...)","Hai hai Claudiacs! Terima kasih sudah datang! Dukung aku ya!! (Hehehe, ini akan sangat mudah sesuai dengan rencana...)","Olá, Claudiacs! Obrigada por terem vindo! Como sempre, por favor, me deem o seu maior apoio!! (Hehehe, vai ser moleza, como planejado...)"
+ranged-title,Ranged {0},Jarak Jauh {0},Alcance {0}
+ranged-description,Doesn't get weaker when fighting weaker enemies. Breaks in {0} shots,Tidak melemah saat melawan musuh yang lebih lemah. Hancur dalam {0} tembakan,Não enfraquece ao lutar contra inimigos mais fracos. Quebra em {0} tiros.
+drain-title,Drain,Kuras,Ralo
+drain-description,"When defeating enemies, Heal for half that enemy's health rounded down","Saat mengalahkan musuh, Sembuhkan setengah dari kesehatan musuh, dibulatkan ke bawah","Ao derrotar inimigos, cure metade da saúde do inimigo arredondada para baixo"
+fierce-title,Fierce,Garang,Feroz
+fierce-description,"When attacked by a weapon with lower power than its own, double the damage dealt to the player","Saat diserang oleh senjata dengan kekuatan lebih rendah dari miliknya, gandakan kerusakan yang diberikan kepada pemain","Quando atacado por uma arma com poder menor que o seu, o dobro do dano causado ao jogador"
+heal-title,Heal,Sehat,Curar
+heal-description,Increases health by {0},Meningkatkan kesehatan sebesar {0},Aumenta a saúde em {0}
+ironskin-title,Iron Skin {0},Kulit Besi {0},Pele de Ferro {0}
+ironskin-description,"When damaged, will reduce weapon's value by {0}. Weapon will break when it reaches 0","Bila rusak, akan mengurangi nilai senjata sebesar {0}. Senjata akan rusak bila mencapai 0","Quando danificado, reduzirá o valor da arma em {0}. A arma quebrará ao atingir 0."
+fight-with-weapon,Fight With Weapon,Serang dengan Senjata,Lute com arma
+run-away,Run Away,Kabur,Fugir
+cannot-run,Cannot Run ({0}),Tidak Bisa Kabur ({0}),Não é possível executar ({0})
+select-target,Select target,Pilih target,Selecione o alvo
+equip,Equip,Pakai,Equipar
+fight-barehanded,Fight Barehanded,Serang dengan Tangan,Lute com as mãos vazias
+use,Use,Pakai,Usar

@@ -7,5 +7,11 @@ namespace Prototype
     {
         public string id;
         public int amount;
+
+        public LibraryData(string id, int amount)
+        {
+            this.id = id;
+            this.amount = amount;
+        }
     }
 }
