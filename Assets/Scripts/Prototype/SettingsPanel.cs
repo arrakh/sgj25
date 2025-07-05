@@ -18,7 +18,7 @@ namespace Prototype
 
         private bool hasPressedTwice = false;
 
-        private void Awake()
+        private void Start()
         {
             var sfx = PlayerPrefs.GetFloat(SFX_VOLUME, 0.5f);
             var bgm = PlayerPrefs.GetFloat(BGM_VOLUME, 0.5f);

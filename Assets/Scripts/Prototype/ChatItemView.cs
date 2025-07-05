@@ -19,7 +19,7 @@ namespace Prototype
                 avatarImage.sprite = msg.avatar;
 
             if (messageText != null)
-            messageText.text = $"<color=#FFD700><b>{msg.username}:</b></color> {msg.message}";
+                messageText.text = $"<color=#FFD700><b>{msg.username}:</b></color> {msg.message}";
         }
     }
 }

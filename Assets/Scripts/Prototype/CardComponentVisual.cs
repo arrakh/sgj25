@@ -28,6 +28,7 @@ namespace Prototype
 
         private void OnDestroy()
         {
+            if (component == null) return;
             component.OnUpdated -= OnUpdate;
         }
 
