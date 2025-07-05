@@ -1,4 +1,5 @@
 ﻿using System;
+using Assets.SimpleLocalization.Scripts;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -51,7 +52,7 @@ namespace Prototype
             if (!hasPressedTwice)
             {
                 hasPressedTwice = true;
-                warningText.text = "Press the button again to confirm! This will reset the game";
+                warningText.text = LocalizationManager.Localize("reset-confirm");
                 return;
             }
             

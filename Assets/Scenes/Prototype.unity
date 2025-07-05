@@ -1319,6 +1319,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4643128124256688836, guid: 03f4e7f2849164139a1aafb0e16bf8a1, type: 3}
+      propertyPath: objectToShow
+      value: 
+      objectReference: {fileID: 1909930643}
     - target: {fileID: 5458237058032648189, guid: 03f4e7f2849164139a1aafb0e16bf8a1, type: 3}
       propertyPath: m_Name
       value: Tutorial Button
@@ -1337,6 +1341,11 @@ RectTransform:
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2921634811463569839, guid: a9ac0856de51aea41b54b306cb43556a, type: 3}
   m_PrefabInstance: {fileID: 7546912054615625739}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1909930643 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2096187475190638429, guid: 04e5d05d95bdd46139e1a9df09fae668, type: 3}
+  m_PrefabInstance: {fileID: 109207986}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &1897566379052332222 stripped
 MonoBehaviour:
@@ -4703,6 +4712,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1759620026}
     m_Modifications:
+    - target: {fileID: 17117002686323908, guid: ee0b1471126bc4d17a7132cda9c178d8, type: 3}
+      propertyPath: m_Horizontal
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 17117002686323908, guid: ee0b1471126bc4d17a7132cda9c178d8, type: 3}
       propertyPath: m_HorizontalScrollbar
       value: 

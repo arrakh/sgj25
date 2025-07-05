@@ -504,7 +504,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6090951826917874480}
+      - m_Target: {fileID: 772730833203332456}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
@@ -1057,7 +1057,7 @@ PrefabInstance:
     - target: {fileID: 4904211021550505508, guid: 64d3fbd225decc54e85ab2686bb0a5a4, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 6090951826917874480}
+      objectReference: {fileID: 772730833203332456}
     - target: {fileID: 4904211021550505508, guid: 64d3fbd225decc54e85ab2686bb0a5a4, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -1226,7 +1226,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7294709519228956966, guid: f9cf07e35dc86824e91ca3de89cf5c73, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
