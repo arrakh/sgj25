@@ -6953,6 +6953,10 @@ PrefabInstance:
         -
         Semoga berhasil -'
       objectReference: {fileID: 0}
+    - target: {fileID: 6286884893145835324, guid: 04e5d05d95bdd46139e1a9df09fae668, type: 3}
+      propertyPath: localizationKey
+      value: tutorial-arena
+      objectReference: {fileID: 0}
     - target: {fileID: 7629473739668443421, guid: 04e5d05d95bdd46139e1a9df09fae668, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
