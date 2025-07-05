@@ -8,7 +8,7 @@ namespace Prototype.CardComponents.Implementations
 {
     public class SwapComponent : CardComponent, IOnItemUse
     {
-        public override string DisplayName => LocalizationManager.Localize("swap-tile");
+        public override string DisplayName => LocalizationManager.Localize("swap-title");
 
         public override string Description => LocalizationManager.Localize("swap-description");
 
