@@ -14,6 +14,9 @@ namespace Prototype
         
         public void Display(CardComponent cardComponent)
         {
+            if (component != null)
+                component.OnUpdated -= OnUpdate;
+            
             component = cardComponent;
 
             content.text = component.DisplayName;

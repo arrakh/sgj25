@@ -14,8 +14,12 @@ namespace Prototype
 
         public void Display(CardInstance instance)
         {
+            if (cardInstance != null)
+                foreach (var c in cardInstance.Components)
+                    c.OnUpdated -= OnComponentUpdated;
+
             cardInstance = instance;
-            
+
             int index = 0;
             foreach (var component in instance.Components)
             {
@@ -24,9 +28,8 @@ namespace Prototype
                 visuals[index].Display(component);
 
                 component.OnUpdated += OnComponentUpdated;
-                
-                visuals[index].gameObject.SetActive(true);
 
+                visuals[index].gameObject.SetActive(true);
                 index++;
             }
 
@@ -38,9 +41,7 @@ namespace Prototype
         {
             if (cardInstance == null) return;
             foreach (var component in cardInstance.Components)
-            {
                 component.OnUpdated -= OnComponentUpdated;
-            }
         }
 
         private void OnComponentUpdated(CardComponent component)

@@ -22,8 +22,7 @@ namespace Prototype
 
         public void Display(CardInstance cardInstance)
         {
-            if (instance == null || instance.Data.id.Equals(cardInstance.Data.id))
-                componentController.Display(cardInstance);
+            componentController.Display(cardInstance);
             
             instance = cardInstance;
             

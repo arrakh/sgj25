@@ -54,8 +54,7 @@ namespace Prototype
 
         public void Display(CardInstance cardInstance, Action<CardVisual> onCardPicked)
         {
-            if (instance == null || instance.Data.id.Equals(cardInstance.Data.id))
-                componentController.Display(cardInstance);
+            componentController.Display(cardInstance);
             
             instance = cardInstance;
 

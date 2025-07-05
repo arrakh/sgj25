@@ -15,6 +15,8 @@ namespace Prototype.CardComponents.Implementations
 
         public void OnItemUse(ArenaController arena)
         {
+            if (arena.EquippedWeapon == null) return;
+            
             var finalValue = arena.EquippedWeapon.Data.value + cardInstance.Data.value;
             arena.SetWeaponValue(finalValue);
         }

@@ -41,8 +41,8 @@ namespace Prototype
             if (!gameDb.TryInitialize())
                 throw new Exception("CANNOT INITIALIZE GAME DB, CHECK WHATS WRONG WITH DATA");
             
-            //yield return TestResultScreen();
-            //yield break;
+            yield return TestBug();
+            yield break;
             
             Audio.FadeBgm(0f, 1f, 2f);
             fadeScreen.FadeOut(1.2f);
@@ -148,6 +148,16 @@ namespace Prototype
 
             var result = new GameResult(true, defeated, remaining);
             yield return resultScreen.PlayResult(result, 999);
+        }
+
+        IEnumerator TestBug()
+        {
+            PlayerPrefs.DeleteAll();
+
+            foreach (var data in gameDb.ProgressionData)
+                AddAndSaveRewardToLibrary(data);
+
+            yield return GameLoop(gameDb.ProgressionData.Last(), true, false);
         }
     }
 }
