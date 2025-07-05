@@ -999,6 +999,10 @@ PrefabInstance:
       propertyPath: m_text
       value: SKIP
       objectReference: {fileID: 0}
+    - target: {fileID: 4744703686513577859, guid: 64d3fbd225decc54e85ab2686bb0a5a4, type: 3}
+      propertyPath: localizationKey
+      value: skip
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

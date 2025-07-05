@@ -64,8 +64,12 @@ namespace Prototype
         private IEnumerator CampaignPlay()
         {
             Debug.Log("PLAYING CAMPAIGN");
-            
-            if (stageIndex == 0) yield return dialogue.Initialize();
+
+            if (stageIndex == 0)
+            {
+                dialogue.Initialize();
+                yield return new WaitUntil(() => dialogue.DialogueEnded);
+            }
             
             var progression = gameDb.ProgressionData;
 

@@ -35,7 +35,9 @@ namespace Prototype
 
         private Coroutine playRoutine;
 
-        public IEnumerator Initialize()
+        public bool DialogueEnded => dialogueEnded;
+
+        public void Initialize()
         {
             gameObject.SetActive(false);
             
@@ -44,7 +46,7 @@ namespace Prototype
             if (dialogueLines == null || dialogueLines.Length == 0)
             {
                 Debug.LogWarning("Dialogue lines are empty!");
-                yield break;
+                return;
             }
 
             currentIndex = 0;
@@ -66,7 +68,6 @@ namespace Prototype
             gameObject.SetActive(true);
 
             playRoutine = StartCoroutine(PlayDialogue());
-            yield return playRoutine;
         }
 
         private IEnumerator PlayDialogue()

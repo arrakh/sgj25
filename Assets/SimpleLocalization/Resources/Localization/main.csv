@@ -4,7 +4,7 @@ name,English,Bahasa Indonesia,
 you-lost,You lost...,Kamu kalah...,Você perdeu...
 you-win,You win!,Kamu menang!,Você venceu!
 defeated-enemies,Defeated Enemies:,Musuh Terkalahkan:,Inimigos derrotados:
-left-in-arena,Left in Arena:,Tersisa di Arena:,Esquerda na Arena:
+left-in-arena,Left in Arena:,Tersisa di Arena:,Deixado na Arena:
 followers,Followers:,Pengikut:,Seguidores:
 target,Target:,Target:,Alvo:
 continue,Continue,Lanjut,Continuar
@@ -75,3 +75,4 @@ pause,Pause,Pause,Pausa
 back-to-menu,Back to Menu,Kembali ke Menu,Voltar ao menu
 back-warning,Warning: Any unsaved progress will be lost,Perhatian: Data yang tidak tersimpan akan hilang,Aviso: Qualquer progresso não salvo será perdido
 quit,Quit,Keluar,Desistir
+skip,Skip,Lewati,Pular
