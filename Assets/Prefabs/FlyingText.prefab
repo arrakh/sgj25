@@ -150,7 +150,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 7792261572413423001}
-  flySpeed: 80
+  flySpeed: 200
   opacityCurve:
     serializedVersion: 2
     m_Curve:

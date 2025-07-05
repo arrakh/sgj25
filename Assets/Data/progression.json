@@ -1,5 +1,18 @@
 [
   {
+    "minHype": 30,
+    "targetScore": 1500,
+    "cardRewards":
+    [
+      "health-potion-10",
+      "spear-10",
+      "gladiator-13",
+      "gladiator-13",
+      "gladiator-14",
+      "gladiator-14"
+    ]
+  },
+  {
     "minHype": 55,
     "targetScore": 5500,
     "cardRewards": 
