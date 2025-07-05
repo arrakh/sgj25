@@ -128,7 +128,7 @@ namespace Prototype
             for (var i = 0; i < roundSlots.Length; i++)
             {
                 var slot = roundSlots[i];
-                slot.gameObject.SetActive(i < drawAmount);
+                slot.gameObject.SetActive(i < drawAmount - cardLeftToNextTurn);
             }
         }
 
