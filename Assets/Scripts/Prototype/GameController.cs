@@ -12,6 +12,7 @@ namespace Prototype
         private static bool _staticInitialized = false;
         
         [Header("Scene")]
+        [SerializeField] private FadeScreen fadeScreen;
         [SerializeField] private ArenaController arenaController;
         [SerializeField] private DeckBuildingScreen deckBuildingScreen;
         [SerializeField] private GameDatabase gameDb; 
@@ -42,6 +43,9 @@ namespace Prototype
             
             //yield return TestResultScreen();
             //yield break;
+            
+            Audio.FadeBgm(0f, 1f, 2f);
+            fadeScreen.FadeOut(1.2f);
 
             stage = gameSave.LoadStageIndex();
             lastStage = gameDb.ProgressionData.Length - 1;
