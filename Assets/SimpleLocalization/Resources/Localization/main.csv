@@ -24,15 +24,11 @@ clear,Clear,Hapus,Claro
 fight,Fight,Tarung,Lutar
 arena-points,Arena Points,Poin Arena,Pontos de Arena
 hype-levels,Hype Levels,Level Hype,Níveis de Hype
-tutorial-deck-building,"- Place the objects you want to appear in the arena -
-
-- The higher the arena points, the higher the level of difficulty -
-
-- The higher the difficulty level, the more followers you’ll gain in the game -
-
-- Unlock more objects by reaching a certain number of followers in the game -
-
-- Good luck -","- Pasangkan objek yang akan muncul di arena sesuai keinginanmu -
+tutorial-deck-building,"- Assign objects to appear in the arena as you wish - 
+- The higher the arena point, the higher the difficulty is -
+- The higher the difficulty, the more followers you get in the game -
+- Get new objects by clearing the game and getting a certain number of followers -
+- Good luck - ","- Pasangkan objek yang akan muncul di arena sesuai keinginanmu -
 
 - Semakin tinggi arena point, semakin tinggi tingkat kesulitan permainan -
 
@@ -40,14 +36,10 @@ tutorial-deck-building,"- Place the objects you want to appear in the arena -
 
 - Dapatkan objek-objek lain dari mendapatkan sejumlah follower tertentu dalam permainan -
 
-- Semoga berhasil -","- Coloque os objetos que você quer que apareçam na arena -
-
-- Quanto maior a pontuação na arena, maior o nível de dificuldade -
-
-- Quanto maior o nível de dificuldade, mais seguidores você ganhará no jogo -
-
-- Desbloqueie mais objetos alcançando um certo número de seguidores no jogo -
-
+- Semoga berhasil -","- Atribua objetos para aparecerem na arena conforme desejar -
+- Quanto maior a pontuação na arena, maior a dificuldade -
+- Quanto maior a dificuldade, mais seguidores você ganha no jogo -
+- Obtenha novos objetos ao terminar o jogo e obter um certo número de seguidores -
 - Boa sorte -"
 back,Back,Kembali,Voltar
 delete-data,Delete Player Data,Hapus Data,Excluir dados do jogador
@@ -64,6 +56,14 @@ heal-title,Heal,Sehat,Curar
 heal-description,Increases health by {0},Meningkatkan kesehatan sebesar {0},Aumenta a saúde em {0}
 ironskin-title,Iron Skin {0},Kulit Besi {0},Pele de Ferro {0}
 ironskin-description,"When damaged, will reduce weapon's value by {0}. Weapon will break when it reaches 0","Bila rusak, akan mengurangi nilai senjata sebesar {0}. Senjata akan rusak bila mencapai 0","Quando danificado, reduzirá o valor da arma em {0}. A arma quebrará ao atingir 0."
+reinforce-title,Reinforce,Memperkuat,Reforçar
+reinforce-description,Adds {0} to equipped weapon. Nothing happens if no weapon is equipped,Menambahkan {0} ke senjata yang dilengkapi. Tidak ada yang terjadi jika tidak ada senjata yang dilengkapi,Adiciona {0} à arma equipada. Nada acontece se nenhuma arma estiver equipada.
+shield-title,Shield,Tameng,Escudo
+shield-description,"Reduces incoming damage once by {0}, then breaks","Mengurangi kerusakan masuk sekali sebesar {0}, lalu pecah",Reduz o dano recebido uma vez em {0} e depois quebra
+swap-title,Swap,Menukar,Trocar
+swap-description,Randomly selects 1 card and sends it to the bottom of the deck. Draw the next card to replace it,Memilih 1 kartu secara acak dan mengirimkannya ke bagian bawah tumpukan. Ambil kartu berikutnya untuk menggantikannya,Seleciona 1 carta aleatoriamente e a envia para o fundo do baralho. Compra a próxima carta para substituí-la.
+predict-title,Predict {0},Prediksi {0},Prever {0}
+predict-description,View cards that will appear on the next round for {0} rounds,Lihat kartu yang akan muncul di babak berikutnya untuk {0} babak,Ver cartas que aparecerão na próxima rodada por {0} rodadas
 fight-with-weapon,Fight With Weapon,Serang dengan Senjata,Lute com arma
 run-away,Run Away,Kabur,Fugir
 cannot-run,Cannot Run ({0}),Tidak Bisa Kabur ({0}),Não é possível executar ({0})
@@ -78,3 +78,22 @@ quit,Quit,Keluar,Desistir
 skip,Skip,Lewati,Pular
 save-warning,WARNING: Only delete data if your are SURE!,PERHATIAN: Hapus data pemain jika kamu sudah yakin,AVISO: Exclua os dados somente se tiver CERTEZA!
 reset-confirm,Press the button again to confirm! This will reset the game,Tekan tombol lagi untuk konfirmasi! Game akan di reset,Pressione o botão novamente para confirmar! Isso reiniciará o jogo.
+tutorial-arena,"- Each turn random objects will appear on the arena - 
+- Attack and defeat the appearing enemies - 
+- Equip weapons to increase attack power - 
+- Beware, if the enemy's power is stronger than your attack power, HP will decrease - 
+- If your attack power is stronger than the enemy's power, weapon's power will decrease - 
+- Use items and tools with all kinds of effects to help you - 
+- Good luck -","- Setiap giliran, objek acak akan muncul di arena - 
+- Serang dan kalahkan musuh yang muncul - 
+- Lengkapi senjata untuk meningkatkan kekuatan serangan - 
+- Awas, jika kekuatan musuh lebih kuat dari kekuatan seranganmu, HP akan berkurang - 
+- Jika kekuatan seranganmu lebih kuat dari kekuatan musuh, kekuatan senjata akan berkurang - 
+- Gunakan item dan alat dengan berbagai macam efek untuk membantumu - 
+- Semoga beruntung -","- A cada turno, objetos aleatórios aparecerão na arena -
+- Ataque e derrote os inimigos que aparecerem -
+- Equipe armas para aumentar o poder de ataque -
+- Cuidado, se o poder do inimigo for maior que o seu, o HP diminuirá -
+- Se o seu poder de ataque for maior que o do inimigo, o poder da arma diminuirá -
+- Use itens e ferramentas com todos os tipos de efeitos para te ajudar -
+- Boa sorte -"

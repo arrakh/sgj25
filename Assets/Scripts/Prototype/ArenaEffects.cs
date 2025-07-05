@@ -5,6 +5,7 @@ using Prototype.CardComponents.Implementations;
 using UnityEngine;
 using UnityEngine.UI;
 using Utilities;
+using Utilities.FlyingTexts;
 using Random = UnityEngine.Random;
 
 namespace Prototype
@@ -19,6 +20,7 @@ namespace Prototype
         [SerializeField] private Image mimicImage;
         [SerializeField] private EquippedInfo equippedWeapon;
         [SerializeField] private EquippedInfo equippedTool;
+        [SerializeField] private FlyingTextController flyingText;
 
         [Header("Misc")] 
         [SerializeField] private float vignetteStrength;
@@ -49,7 +51,12 @@ namespace Prototype
         {
             if (from == to) return;
             bool isHealed = from < to;
-            var strength = Mathf.Clamp01(Mathf.Abs(from - to) / (float) damageMax);
+            var difference = Mathf.Abs(from - to);
+            var text = $"{(isHealed ? '+' : '-')}{difference}";
+            var flyText = flyingText.Create(text, healthRect.position, 2f);
+            flyText.color = isHealed ? Color.green : Color.red;
+            
+            var strength = Mathf.Clamp01(difference / (float) damageMax);
             if (isHealed) DoHealEffect(strength);
             else DoDamageEffect(strength);
         }
