@@ -21,8 +21,9 @@ namespace Prototype
         [SerializeField] private int cardLeftToNextTurn = 1;
         [SerializeField] private int maxHealth = 20;
         [SerializeField] private int runAwayCooldown = 2;
-        
+
         [Header("Scene References")] 
+        [SerializeField] private ArenaEffects arenaEffect;
         [SerializeField] private RectTransform cardParent;
         [SerializeField] private RectTransform nextCardsParent;
         [SerializeField] private TextMeshProUGUI roomText;
@@ -356,9 +357,11 @@ namespace Prototype
             }
 
             if (finalAmount == 0) return;
-            
+
+            var oldHealth = health;
             health += finalAmount;
             health = Math.Clamp(health, 0, maxHealth);
+            arenaEffect.OnHealthChanged(oldHealth, health);
 
             var shakeDur = Mathf.Clamp01(finalAmount / 10f);
             var color = finalAmount > 0 ? Color.green : Color.red;
@@ -409,6 +412,7 @@ namespace Prototype
             equippedWeapon.SetValue(newValue);
             equippedWeaponVisual.Display(equippedWeapon, null);
             ShakeColorAnimateText(equippedValueText, color, 0.3f);
+            arenaEffect.OnWeaponValueChanged();
         }
 
         private void OnEquipWeaponAction()

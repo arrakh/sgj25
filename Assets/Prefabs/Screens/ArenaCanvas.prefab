@@ -905,6 +905,81 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &2039138721797896142
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 339687132343977530}
+  - component: {fileID: 6187734999793918656}
+  - component: {fileID: 8074627423521820017}
+  m_Layer: 5
+  m_Name: Vignette
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &339687132343977530
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2039138721797896142}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2031662712473193468}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &6187734999793918656
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2039138721797896142}
+  m_CullTransparentMesh: 1
+--- !u!114 &8074627423521820017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2039138721797896142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 0, b: 0, a: 0}
+  m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 712bd71fddd71eb4a867a032fe2acc8c, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &2056695972862147458
 GameObject:
   m_ObjectHideFlags: 0
@@ -2617,6 +2692,7 @@ GameObject:
   - component: {fileID: 5059386002035653567}
   - component: {fileID: 5447790917151527581}
   - component: {fileID: 5280542751971061234}
+  - component: {fileID: 8857675479665308458}
   m_Layer: 5
   m_Name: ArenaCanvas
   m_TagString: Untagged
@@ -2641,6 +2717,7 @@ RectTransform:
   - {fileID: 2749858828198645906}
   - {fileID: 6551050764355048483}
   - {fileID: 2921634811463569839}
+  - {fileID: 339687132343977530}
   - {fileID: 2001773647215723933}
   - {fileID: 5356030309949016056}
   - {fileID: 4155049553052249673}
@@ -2719,6 +2796,32 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &8857675479665308458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3670302947111165014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e69a300e144b4752886162328809625d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vignette: {fileID: 8074627423521820017}
+  character: {fileID: 8795310234674586588}
+  healthRect: {fileID: 4155049553052249673}
+  weaponValueRect: {fileID: 4257073750582754013}
+  healDuration: 0.6
+  healCharacterFromColor: {r: 0.5411765, g: 1, b: 0.5686275, a: 1}
+  healVignetteFromColor: {r: 0.19215687, g: 1, b: 0.24313726, a: 0.7882353}
+  healShakeStrength: 10
+  healShakeDuration: 0.33
+  damageDuration: 0.6
+  damageCharacterFromColor: {r: 1, g: 0.36078432, b: 0.3254902, a: 1}
+  damageVignetteFromColor: {r: 1, g: 0, b: 0, a: 0.8666667}
+  damageShakeStrength: 10
+  damageShakeDuration: 0.33
 --- !u!1 &4276004144146016194
 GameObject:
   m_ObjectHideFlags: 0
