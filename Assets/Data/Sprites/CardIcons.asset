@@ -38,8 +38,8 @@ MonoBehaviour:
   - id: cheat-sheet
     sprite: {fileID: 21300000, guid: 3ce01933656516e4aa93f0666463c372, type: 3}
   - id: gladiator
-    sprite: {fileID: -8779681549725420321, guid: 2c646db05991abc43931ebc9aeb03f96, type: 3}
+    sprite: {fileID: 21300000, guid: 74647055894bd7046a3ec08ba21188ff, type: 3}
   - id: stone-golem
-    sprite: {fileID: -8779681549725420321, guid: 2c646db05991abc43931ebc9aeb03f96, type: 3}
+    sprite: {fileID: 21300000, guid: 3009d76bee71b834ba4ce6a00ecfccf0, type: 3}
   - id: lion
-    sprite: {fileID: -8779681549725420321, guid: 2c646db05991abc43931ebc9aeb03f96, type: 3}
+    sprite: {fileID: 21300000, guid: e048ac09a1574204cb619ce26f8bb3b6, type: 3}

@@ -45,8 +45,10 @@ namespace Prototype
             ResetState();
             
             nextButton.gameObject.SetActive(false);
+            
+            Audio.PlayBgm(gameResult.win ? "victory" : "defeat", true);
 
-            var key = gameResult.win ? "you-lost" : "you-win";
+            var key = gameResult.win ? "you-win" : "you-lost";
             resultText.text = LocalizationManager.Localize(key);
             Score = 0;
             scoreText.text = "0";

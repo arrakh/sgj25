@@ -18,6 +18,7 @@ namespace Prototype
         [SerializeField] private ResultScreenController resultScreen;
         [SerializeField] private RewardScreen rewardScreen;
         [SerializeField] private GameSaveController gameSave;
+        [SerializeField] private DialogueController dialogue;
 
         [Header("Data")]
         [SerializeField] private SpriteDatabase[] spriteDatabases;
@@ -58,7 +59,13 @@ namespace Prototype
 
         private IEnumerator CampaignPlay()
         {
+            Debug.Log("PLAYING CAMPAIGN");
+            
+            if (stage == 0) yield return dialogue.Initialize();
+            
             var progression = gameDb.ProgressionData;
+
+            Debug.Log($"Campaign: Stage {stage}");
 
             for (int i = stage; i < progression.Length; i++)
             {

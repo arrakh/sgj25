@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using DG.Tweening;
 using Prototype.CardComponents;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Utilities;
 
@@ -20,7 +22,14 @@ namespace Prototype
         [SerializeField] private Image highlight, lockedImage;
         [SerializeField] private TextMeshProUGUI nameText;
         [SerializeField] private CardComponentVisualController componentController;
+        [SerializeField] private CanvasGroup canvasGroup;
         [SerializeField] private bool canSelect = true;
+        [SerializeField] private RectTransform visualParent;
+        
+        [Header("Animation: Reveal")]
+        [SerializeField] private float revealTime = 1.2f;
+        [SerializeField] private float inDistance = 100f;
+        [SerializeField] private AnimationCurve inCurve;
 
         public CardType Type => instance.Data.type;
         public CardData Data => instance.Data;
@@ -56,7 +65,7 @@ namespace Prototype
 
             var type = instance.Data.type;
             background.sprite = type.GetBackground();
-            nameplate.sprite = type.GetBackground();
+            nameplate.sprite = type.GetBanner();
             
             OnDisplay(instance);
         }
@@ -81,7 +90,7 @@ namespace Prototype
             isSelected = selected;
             highlight.gameObject.SetActive(isSelected);
             if (!isSelected) return;
-            highlight.color = Color.yellow;
+            highlight.color = Color.white;
         }
 
         public void OnPointerEnter(PointerEventData eventData)
@@ -102,6 +111,18 @@ namespace Prototype
         private void OnEnable()
         {
             highlight.gameObject.SetActive(false);
+        }
+
+        public void RevealAnimation(float delay)
+        {
+            canvasGroup.alpha = 0f;
+            canvasGroup.DOFade(1f, revealTime).SetDelay(delay);
+
+            var localPos = visualParent.localPosition;
+            localPos.y -= inDistance;
+            visualParent.localPosition = localPos;
+
+            visualParent.DOLocalMoveY(0f, revealTime).SetEase(inCurve).SetDelay(delay);
         }
     }
 }

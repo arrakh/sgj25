@@ -53,6 +53,8 @@ namespace Prototype
             
             ResetState();
             
+            Audio.PlayBgm("menu");
+            
             hypeMin = minimumHype;
             shouldRestrictHype = restrictHype;
 
