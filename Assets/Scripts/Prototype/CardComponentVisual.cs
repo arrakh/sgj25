@@ -1,4 +1,5 @@
-﻿using Prototype.CardComponents;
+﻿using System;
+using Prototype.CardComponents;
 using Prototype.Tooltip;
 using TMPro;
 using UnityEngine;
@@ -23,6 +24,11 @@ namespace Prototype
         private void OnUpdate(CardComponent obj)
         {
             content.text = obj.DisplayName;
+        }
+
+        private void OnDestroy()
+        {
+            component.OnUpdated -= OnUpdate;
         }
 
         public bool HasData() => component != null;

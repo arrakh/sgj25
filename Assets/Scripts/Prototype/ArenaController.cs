@@ -87,6 +87,9 @@ namespace Prototype
         {
             if (!isGameRunning) return;
             
+            if (Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.LeftAlt) && Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.V))
+                AutoWin();
+            
             healthText.text = $" {health} / {maxHealth}";
             healthSlider.value = (float) health / maxHealth;
 
@@ -128,7 +131,7 @@ namespace Prototype
             for (var i = 0; i < roundSlots.Length; i++)
             {
                 var slot = roundSlots[i];
-                slot.gameObject.SetActive(i < drawAmount);
+                slot.gameObject.SetActive(i < drawAmount - cardLeftToNextTurn);
             }
         }
 
@@ -157,10 +160,12 @@ namespace Prototype
             currentRunCooldown = 0;
             health = maxHealth;
             discarded.Clear();
-            ClearCards();
             selectedCardVisual = null;
             equippedWeapon = null;
+            deck.Clear();
             
+            ClearCards();
+
             nextCardsParent.gameObject.SetActive(false);
         }
 
@@ -174,11 +179,6 @@ namespace Prototype
 
         private void NextTurn()
         {
-            var canRun = currentRunCooldown <= 0;
-            var runAway = LocalizationManager.Localize("run-away");
-            var cannotRun = LocalizationManager.Localize("cannot-run", currentRunCooldown);
-            runActionText.text = canRun ? runAway : cannotRun;
-            runActionButton.interactable = canRun;
             
             if (health <= 0)
             {
@@ -189,7 +189,13 @@ namespace Prototype
             var cardsDoneThisTurn = drawAmount - spawnedCards.Count;
             SetDrawOrbs(cardsDoneThisTurn);
             if (spawnedCards.Count <= cardLeftToNextTurn) NextRound();
-
+            
+            var canRun = currentRunCooldown <= 0;
+            var runAway = LocalizationManager.Localize("run-away");
+            var cannotRun = LocalizationManager.Localize("cannot-run", currentRunCooldown);
+            runActionText.text = canRun ? runAway : cannotRun;
+            runActionButton.interactable = canRun;
+            
             arenaInfo.UpdateInfo(deck, spawnedCards.Select(x => x.Instance), discarded);
 
             if (!HasEnemies()) ConcludeGame(true);
@@ -311,7 +317,10 @@ namespace Prototype
         private void OnEquipToolAction()
         {
             equippedTool = selectedCardVisual.Instance;
-            equippedWeaponVisual.Display(equippedTool, null);
+            equippedToolVisual.Display(equippedTool);
+
+            foreach (var component in selectedCardVisual.Instance.Components)
+                if (component is IOnEquip equip) equip.OnEquip(this);
             
             ConsumeSelectedCard();
         }
@@ -410,7 +419,7 @@ namespace Prototype
             var color = newValue > equippedWeapon.Data.value ? Color.green : Color.red;
 
             equippedWeapon.SetValue(newValue);
-            equippedWeaponVisual.Display(equippedWeapon, null);
+            equippedWeaponVisual.Display(equippedWeapon);
             ShakeColorAnimateText(equippedValueText, color, 0.3f);
             arenaEffect.OnWeaponValueChanged();
         }
@@ -419,7 +428,10 @@ namespace Prototype
         {
             equippedWeapon = selectedCardVisual.Instance;
             
-            equippedWeaponVisual.Display(equippedWeapon, null);
+            equippedWeaponVisual.Display(equippedWeapon);
+            
+            foreach (var component in selectedCardVisual.Instance.Components)
+                if (component is IOnEquip equip) equip.OnEquip(this);
             
             ShakeColorAnimateText(equippedValueText, Color.green, 0.3f);
 
@@ -477,6 +489,8 @@ namespace Prototype
         private void ConsumeCard(CardVisual card)
         {
             if (card.Equals(selectedCardVisual)) selectedCardVisual = null;
+
+            arenaEffect.OnCardConsumed(card);
 
             spawnedCards.Remove(card);
             discarded.Add(card.Instance);

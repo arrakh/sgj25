@@ -18,6 +18,7 @@ namespace Prototype
         [SerializeField] private Image icon;
         [SerializeField] private Image nameplate;
         [SerializeField] private Image background;
+        [SerializeField] private RectTransform valueRect;
         [SerializeField] private TextMeshProUGUI valueText;
         [SerializeField] private Image highlight, lockedImage;
         [SerializeField] private TextMeshProUGUI nameText;
@@ -30,6 +31,8 @@ namespace Prototype
         [SerializeField] private float revealTime = 1.2f;
         [SerializeField] private float inDistance = 100f;
         [SerializeField] private AnimationCurve inCurve;
+
+        public Image Icon => icon;
 
         public CardType Type => instance.Data.type;
         public CardData Data => instance.Data;
@@ -62,6 +65,8 @@ namespace Prototype
 
             valueText.text = Value.ToString();
             icon.sprite = SpriteDatabase.Get(instance.Data.spriteId);
+            
+            valueRect.gameObject.SetActive(Value > 0);
 
             var type = instance.Data.type;
             background.sprite = type.GetBackground();

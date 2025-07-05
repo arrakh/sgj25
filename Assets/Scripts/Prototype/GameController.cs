@@ -24,7 +24,7 @@ namespace Prototype
         [Header("Data")]
         [SerializeField] private SpriteDatabase[] spriteDatabases;
 
-        private int stage, lastStage;
+        private int stageIndex, lastStageIndex;
         
         private IEnumerator Start()
         {
@@ -47,10 +47,10 @@ namespace Prototype
             Audio.FadeBgm(0f, 1f, 2f);
             fadeScreen.FadeOut(1.2f);
 
-            stage = gameSave.LoadStageIndex();
-            lastStage = gameDb.ProgressionData.Length - 1;
+            stageIndex = gameSave.LoadStageIndex();
+            lastStageIndex = gameDb.ProgressionData.Length - 1;
 
-            if (stage < lastStage) yield return CampaignPlay();
+            if (stageIndex < lastStageIndex) yield return CampaignPlay();
 
             yield return FreePlay();
         }
@@ -65,16 +65,16 @@ namespace Prototype
         {
             Debug.Log("PLAYING CAMPAIGN");
             
-            if (stage == 0) yield return dialogue.Initialize();
+            if (stageIndex == 0) yield return dialogue.Initialize();
             
             var progression = gameDb.ProgressionData;
 
-            Debug.Log($"Campaign: Stage {stage}");
+            Debug.Log($"Campaign: Stage {stageIndex}");
 
-            for (int i = stage; i < progression.Length; i++)
+            while (stageIndex < lastStageIndex)
             {
-                var data = progression[i];
-                yield return GameLoop(data, false, i == 0);
+                var data = progression[stageIndex];
+                yield return GameLoop(data, false, stageIndex == 0);
                 
                 var score = resultScreen.Score;
                 if (score < data.targetScore) continue;
@@ -84,8 +84,8 @@ namespace Prototype
                 rewardScreen.gameObject.SetActive(true);
                 yield return rewardScreen.DisplayRewards(data.cardRewards);
                 
-                stage++;
-                gameSave.SaveStageIndex(stage);
+                stageIndex++;
+                gameSave.SaveStageIndex(stageIndex);
             }
         }
 

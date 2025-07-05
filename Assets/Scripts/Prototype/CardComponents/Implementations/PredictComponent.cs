@@ -4,7 +4,7 @@ using Utilities;
 
 namespace Prototype.CardComponents.Implementations
 {
-    public class PredictComponent : CardComponent, IOnItemUse, IOnNewRound
+    public class PredictComponent : CardComponent, IOnEquip, IOnNewRound
     {
         private int roundCount;
         
@@ -18,7 +18,7 @@ namespace Prototype.CardComponents.Implementations
             Debug.Log($"ROUND COUNT IS NOW {roundCount}");
         }
 
-        public void OnItemUse(ArenaController arena)
+        public void OnEquip(ArenaController arena)
         {
             arena.SetShowNextCards(true);
         }
@@ -33,6 +33,8 @@ namespace Prototype.CardComponents.Implementations
                 RaiseUpdateEvent();
                 return;
             }
+            
+            arena.SetShowNextCards(false);
 
             switch (cardInstance.Data.type)
             {
@@ -41,6 +43,5 @@ namespace Prototype.CardComponents.Implementations
                 default: throw new Exception($"CANNOT HANDLE PREDICT ON CARD {cardInstance.Data.id} WITH TYPE {cardInstance.Data.type}");
             }
         }
-
     }
 }

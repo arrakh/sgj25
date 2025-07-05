@@ -23,6 +23,15 @@ namespace Prototype
         private CardData data;
         private List<CardComponent> components = new();
 
+        public bool HasComponent<T>() where T : CardComponent
+        {
+            foreach (var comp in components)
+                if (comp is T)
+                    return true;
+
+            return false;
+        }
+
         public void SetValue(int newValue)
         {
             data.value = newValue;

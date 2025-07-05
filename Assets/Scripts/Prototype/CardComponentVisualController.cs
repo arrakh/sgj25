@@ -45,11 +45,13 @@ namespace Prototype
 
         private void OnComponentUpdated(CardComponent component)
         {
+            if (visualParent == null) return;
             Invoke(nameof(RebuildVisuals), 0.02f);
         }
 
         private void RebuildVisuals()
         {
+            if (visualParent == null) return;
             LayoutRebuilder.ForceRebuildLayoutImmediate(visualParent);
         }
     }

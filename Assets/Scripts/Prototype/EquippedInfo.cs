@@ -11,13 +11,16 @@ namespace Prototype
         [SerializeField] private Image icon;
         [SerializeField] private Image background;
         [SerializeField] private Image nameplate;
+        [SerializeField] private RectTransform valueRect;
         [SerializeField] private TextMeshProUGUI valueText;
         [SerializeField] private TextMeshProUGUI nameText;
         [SerializeField] private CardComponentVisualController componentController;
         
         private CardInstance instance;
 
-        public void Display(CardInstance cardInstance, Action<CardVisual> onCardPicked)
+        public Image Icon => icon;
+
+        public void Display(CardInstance cardInstance)
         {
             if (instance == null || instance.Data.id.Equals(cardInstance.Data.id))
                 componentController.Display(cardInstance);
@@ -29,9 +32,16 @@ namespace Prototype
             nameplate.sprite = type.GetBanner();
             
             nameText.text = instance.Data.displayName;
+            
+            valueRect.gameObject.SetActive(instance.Data.value > 0);
 
             valueText.text = instance.Data.value.ToString();
             icon.sprite = SpriteDatabase.Get(instance.Data.spriteId);
+        }
+
+        public void SetShowIcon(bool show)
+        {
+            icon.enabled = show;
         }
     }
 }
