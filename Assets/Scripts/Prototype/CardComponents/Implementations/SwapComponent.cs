@@ -1,13 +1,18 @@
-﻿namespace Prototype.CardComponents.Implementations
+﻿/*
+ *   Copyright (c) 2025 
+ *   All rights reserved.
+ */
+ using Assets.SimpleLocalization.Scripts;
+ 
+namespace Prototype.CardComponents.Implementations
 {
     public class SwapComponent : CardComponent, IOnItemUse
     {
-        public override string DisplayName => "Swap";
+        public override string DisplayName => LocalizationManager.Localize("swap-tile");
 
-        public override string Description =>
-            "Randomly selects 1 card and sends it to the bottom of the deck. Draw the next card to replace it";
+        public override string Description => LocalizationManager.Localize("swap-description");
 
-        public override string[] Aliases => new []{"swap"};
+        public override string[] Aliases => new[] { "swap" };
 
 
         public void OnItemUse(ArenaController arena)

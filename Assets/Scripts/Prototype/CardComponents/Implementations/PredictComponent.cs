@@ -1,6 +1,11 @@
-﻿using System;
+﻿/*
+ *   Copyright (c) 2025 
+ *   All rights reserved.
+ */
+using System;
 using UnityEngine;
 using Utilities;
+using Assets.SimpleLocalization.Scripts;
 
 namespace Prototype.CardComponents.Implementations
 {
@@ -8,8 +13,8 @@ namespace Prototype.CardComponents.Implementations
     {
         private int roundCount;
         
-        public override string DisplayName => $"Predict {roundCount}";
-        public override string Description => $"View cards that will appear on the next round for {roundCount} rounds";
+        public override string DisplayName => LocalizationManager.Localize("predict-title",roundCount);
+        public override string Description => LocalizationManager.Localize("predict-description",roundCount);
         public override string[] Aliases => new[] {"predict"};
 
         protected override void OnInitialize(string[] args)
